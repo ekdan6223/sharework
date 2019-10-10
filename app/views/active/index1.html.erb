@@ -24,7 +24,6 @@
       .favorites {
         padding: 12px;
         margin-bottom: 10px;
-        background: white;
         display: inline-block;
         cursor: pointer;
       }
@@ -36,7 +35,7 @@
 
         <div id="maparea">
           <div id="sch">
-                <input type="text" placeholder="어느지역에서 일하고 싶으세요?">
+                <input type="text" onkeyup="enterkey();"  id="address" placeholder="어느지역에서 일하고 싶으세요?">
                 <span class="favorites" id="currentLocation"></span> 
             </div>
 
@@ -61,30 +60,17 @@
     </div>
 
         </div>
-        <div id="stick-here"></div>
-        <div id="container" class="recm" style="margin-top:450px;background:#fff;">
+
+        <div id="container" class="recm" style="background:#fff;">
 
             <h5>이 알바는 어때요?</h5>
             
-<div style="float:right;">
-   <select>
-              <option>최신순</option>
-              <option>거리순</option>
-              <option>가격순</option>
-            </select>
+            <div style="float:right;">
+            <button id="day_payment" class="btn_sort2"><i class="far fa-check-square"></i> 당일지급</button> <!-- 클릭시 클래스 추가  sort2_on -->
+            <button id="street_order" class="btn_sort sort_on">거리순</button><button id="newest" class="btn_sort">최신순</button><button id="price" class="btn_sort">가격순</button>
+            </div>           
             
-            <button>당일지급</button>
-  
-  
-</div>           
-            
-            
-            <ul class="work_list">
-              
-            </ul>
-
-
-
+            <ul class="work_list"></ul>
 
         </div>
 
@@ -99,35 +85,9 @@
     
     
     
-<style>
-.stick {
-    margin-top: 0;
-    position: fixed;
-    top: 0;
-    margin-top:0 !important;
-
-}
-</style>
-    
     
 
         
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
-<!--<script>
-function sticktothetop() {
-    var window_top = $(window).scrollTop();
-
-    if (window_top > 200) {
-        $('.recm').addClass('stick');
-    } else {
-        $('.recm').removeClass('stick');
-    }
-}
-$(function() {
-    $(window).scroll(sticktothetop);
-    sticktothetop();
-});
-</script>-->
 
 
 
@@ -157,11 +117,13 @@ $(function() {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
+            
+            setData(pos['lat'], pos['lng']);
 
             //infoWindow.setPosition(pos);
             //infoWindow.setContent('Location found.');
             //infoWindow.open(map);
-            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            var image = '/img/mylocation.png';
             var marker = new google.maps.Marker({position: pos, map: map, icon: image});
             map.setCenter(pos);
           }, function() {
@@ -183,6 +145,7 @@ $(function() {
             //var tag = selectTagObj(data);
             
             marker.distance = calcDistance(pos.lat, pos.lng, marker.y, marker.x);
+            marker.realdistance = realDistance(pos.lat, pos.lng, marker.y, marker.x);
             gridListObj(marker);
           });
           
@@ -202,6 +165,7 @@ $(function() {
             var length = data.length;
             for(var i = 0; i < length; i++) {
               data[i].distance = calcDistance(pos.lat, pos.lng, data[i].y, data[i].x);
+              data[i].realdistance = realDistance(pos.lat, pos.lng, data[i].y, data[i].x);
             }
             gridList(data);
         });
@@ -221,10 +185,107 @@ $(function() {
         return tagList;
       }
       
+      function initGeoMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          panControl: true,
+          zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          overviewMapControl: false
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            //infoWindow.setPosition(pos);
+            //infoWindow.setContent('Location found.');
+            //infoWindow.open(map);
+            var image = '/img/mylocation.png';
+            var marker = new google.maps.Marker({position: pos, map: map, icon: image});
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+        markers = locations.map(function(location, i) {
+          var marker = new google.maps.Marker({
+            position: location,
+            //label: labels[i % labels.length]
+          });
+          
+          google.maps.event.addListener(marker, 'click', function() {
+            var data = { job_id: marker.id };
+            //var tag = selectTagObj(data);
+            
+            marker.distance = calcDistance(pos.lat, pos.lng, marker.y, marker.x);
+            marker.realdistance = realDistance(pos.lat, pos.lng, marker.y, marker.x);
+            gridListObj(marker);
+          });
+          
+          return marker;
+        });
+        
+        addMarkerData(); //마커 추가정보 입력
+        
+        // Add a marker clusterer to manage the markers.
+        //var markerCluster = new MarkerClusterer(map, markers, {
+          //maxZoom: 15,
+        //  imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        //});
+        
+                
+    var clusterStyles = [
+        {
+            url: '/img/num_bg.png',
+            width: 50,
+            height: 50,
+            fontFamily:"Arial",
+            textSize:20,
+            textColor:"white"
+        },
+    ];
+        
+    var clusterOptions = {
+        imagePath: '/img/num_bg.png',
+        styles: clusterStyles
+    };
+    
+    
+    
+      var markerCluster = new MarkerClusterer(map, markers, clusterOptions);
+       
+
+
+        
+        google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+            var data = cluster.getMarkers();
+            var length = data.length;
+            for(var i = 0; i < length; i++) {
+              data[i].distance = calcDistance(pos.lat, pos.lng, data[i].y, data[i].x);
+              data[i].realdistance = realDistance(pos.lat, pos.lng, data[i].y, data[i].x);
+            }
+            gridList(data);
+        });
+      }
+      
       function favoritesMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-          zoom: 12,
+          zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           panControl: true,
           zoomControl: false,
@@ -245,6 +306,7 @@ $(function() {
           
           google.maps.event.addListener(marker, 'click', function() {
             marker.distance = calcDistance(pos.lat, pos.lng, marker.y, marker.x);
+            marker.realdistance = realDistance(pos.lat, pos.lng, marker.y, marker.x);
             gridListObj(marker);
           });
           
@@ -253,17 +315,40 @@ $(function() {
         
         addMarkerData(); //마커 추가정보 입력
         
-        // Add a marker clusterer to manage the markers.
-        var markerCluster = new MarkerClusterer(map, markers, {
+      // Add a marker clusterer to manage the markers.
+        //var markerCluster = new MarkerClusterer(map, markers, {
           //maxZoom: 15,
-          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        });
+          //imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        //});
+        
+        
+    var clusterStyles = [
+        {
+            height: 53,
+            url: '/img/num_bg.png',
+            width: 53,
+        },
+    ];
+        
+       
+    var clusterOptions = {
+        imagePath: '/img/num_bg.png',
+        styles: clusterStyles
+    };
+    
+    
+    
+      var markerCluster = new MarkerClusterer(map, markers, clusterOptions);
+       
+
+
         
         google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
             var data = cluster.getMarkers();
             var length = data.length;
             for(var i = 0; i < length; i++) {
               data[i].distance = calcDistance(pos.lat, pos.lng, data[i].y, data[i].x);
+              data[i].realdistance = realDistance(pos.lat, pos.lng, data[i].y, data[i].x);
             }
             gridList(data);
         });
@@ -300,6 +385,7 @@ $(function() {
       }
       
       function calcDistance(lat1, lon1, lat2, lon2){
+          
           var EARTH_R, Rad, radLat1, radLat2, radDist; 
           var distance, ret;
           EARTH_R = 6371000.0;
@@ -321,37 +407,63 @@ $(function() {
           return  rtn;
       }
       
+      function realDistance(lat1, lon1, lat2, lon2){
+          var EARTH_R, Rad, radLat1, radLat2, radDist; 
+          var distance, ret;
+          EARTH_R = 6371000.0;
+          Rad 		= Math.PI/180;
+          radLat1 = Rad * lat1;
+          radLat2 = Rad * lat2;
+          radDist = Rad * (lon1 - lon2);
+          distance = Math.sin(radLat1) * Math.sin(radLat2);
+          distance = distance + Math.cos(radLat1) * Math.cos(radLat2) * Math.cos(radDist);
+          ret 		 = EARTH_R * Math.acos(distance);
+          
+          return  ret;
+      }
+      
       function gridList(data) {
+        var tag = <%= raw @tag %>;
         
           $(".work_list").empty();
           
           for(var i = 0; i < data.length; i++) {
               var li$ = $('<li>');
+              var div$ = $('<div>');
               $('<section>').append(
                 $('<a>').addClass('icon_fav').append(
-                  $('<i>').addClass('far fa-star')
+                  $('<i>').addClass('far fa-star').data('bussiness_id', data[i].bussiness_id)
                 ),
                 $('<div>').addClass('img').append(
                   $('<img>').attr('src', 'https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg')
                 ),
-                $('<div>').addClass('info').append(
+                div$.addClass('info').append(
                   $('<div>').addClass('title').text(data[i].bs_name + ' ').append(
                     $('<span>').text(data[i].address),
                     $('<span>').addClass('loc').text(data[i].distance)
                   ),
-                  $('<a>').addClass('tag').text('#주방 보조'),
-                  $('<a>').addClass('tag').text('#서빙'),
-                  $('<a>').addClass('tag').text('#배달')
                 )
               ).appendTo(li$);
               
+              for(var j = 0; j < tag.length; j++) {
+                if(Number(tag[j].job_id) == data[i].id) {
+                 $('<a>').addClass('tag').text('#' + tag[j].sort).appendTo(div$);
+                }
+              }
+              
+              var liPay$ = $('<li>');
               $('<ul>').addClass('info2').append(
                 $('<li>').text(data[i].date),
                 $('<li>').text(data[i].time_start + '시 ~ ' + data[i].time_end + '시'),
-                $('<li>').text('시급 ' + data[i].pay + '원').append(
-                  $('<span>').addClass('icon-blue').text('당일지급')
+                liPay$.text('시급 ' + data[i].pay + '원').append(
+                  
                 )
               ).appendTo(li$);
+              
+              if(data[i].day_payment == 'T') {
+                $('<span>').addClass('icon-blue').text('당일지급').appendTo(liPay$);
+              }
+              
               
               $('<span>').addClass('btn_apply').text('바로지원').data('id', data[i].id).append(
                 $('<i>').addClass('fas fa-chevron-right')  
@@ -362,9 +474,12 @@ $(function() {
       }
       
       function gridListObj(data) {
+        var tag = <%= raw @tag %>;
+        
           $(".work_list").empty();
           
           var li$ = $('<li>');
+          var div$ = $('<div>');
           $('<section>').append(
             $('<a>').addClass('icon_fav').append(
               $('<i>').addClass('far fa-star')
@@ -372,24 +487,32 @@ $(function() {
             $('<div>').addClass('img').append(
               $('<img>').attr('src', 'https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg')
             ),
-            $('<div>').addClass('info').append(
+            div$.addClass('info').append(
               $('<div>').addClass('title').text(data.bs_name + ' ').append(
                 $('<span>').text(data.address),
                 $('<span>').addClass('loc').text(data.distance)
               ),
-              $('<a>').addClass('tag').text('#주방 보조'),
-              $('<a>').addClass('tag').text('#서빙'),
-              $('<a>').addClass('tag').text('#배달')
             )
           ).appendTo(li$);
           
+          for(var i = 0; i < tag.length; i++) {
+            if(Number(tag[i].job_id) == data.id) {
+             $('<a>').addClass('tag').text('#' + tag[i].sort).appendTo(div$);
+            }
+          }
+          
+          var liPay$ = $('<li>');
           $('<ul>').addClass('info2').append(
             $('<li>').text(data.date),
             $('<li>').text(data.time_start + '시 ~ ' + data.time_end + '시'),
-            $('<li>').text('시급 ' + data.pay + '원').append(
+            liPay$.text('시급 ' + data.pay + '원').append(
               $('<span>').addClass('icon-blue').text('당일지급')
             )
           ).appendTo(li$);
+          
+          if(data.day_payment == 'T') {
+            $('<span>').addClass('icon-blue').text('당일지급').appendTo(liPay$);
+          }
           
           $('<span>').addClass('btn_apply').text('바로지원').data('id', data.id).append(
             $('<i>').addClass('fas fa-chevron-right')  
@@ -406,14 +529,21 @@ $(function() {
       var time_end = [];
       var pay = [];
       var distance = [];
+      var realdistance = [];
       var locations = [];
       var y = [];
       var x = [];
       var date = [];
       var address = [];
       
-      $(function(){
-        for(var i = 0; i < job.length; i++) {
+      var data = [];
+      
+      function dataList(data) {
+        
+      }
+      
+      function setData(pos_y, pos_x) {
+         for(var i = 0; i < job.length; i++) {
           id.push(job[i].id);
           bs_address.push(job[i].bs_address);
           bs_name.push(job[i].bs_name);
@@ -425,7 +555,38 @@ $(function() {
           x.push(job[i].x);
           date.push(job[i].date);
           address.push(job[i].address);
+          
+          newRowData = {
+            id: job[i].id,
+            bs_address: job[i].bs_address,
+            bs_name: job[i].bs_name,
+            time_start: job[i].time_start,
+            time_end: job[i].time_end,
+            pay: job[i].pay,
+            y: job[i].y,
+            x: job[i].x,
+            distance: calcDistance(pos_y, pos_x, job[i].y, job[i].x),
+            realdistance: realDistance(pos_y, pos_x, job[i].y, job[i].x),
+            date: job[i].date,
+            address: job[i].addyress,
+            removeComma: job[i].pay.replace(/,/gi,""),
+            day_payment: job[i].day_payment,
+            created_at: job[i].created_at,
+            bussiness_id: job[i].bussiness_id
+          }
+          data.push(newRowData);
         }
+        
+        data.sort(function(a, b) { // 오름차순
+          return a["realdistance"] - b["realdistance"];
+        });
+        
+        gridList(data);
+        initGeoMap();
+      }
+      
+      $(function(){
+       
         
         $(document).on('click','.btn_apply', function(){
           var id = $(this).data('id');
@@ -437,7 +598,7 @@ $(function() {
         });
         
         $('#currentLocation').on('click', function() {
-          initMap();
+          initGeoMap();
         });
         
         $('#favorites_0').on('click', function() {
@@ -459,10 +620,75 @@ $(function() {
         $('#Applicant').on('click', function() {
           location.href = "/active/list_application";
         });
+        
+        $('#price').on('click', function() {
+          data.sort(function(b, a) { 
+            return a["removeComma"] - b["removeComma"];
+          });
+        
+          $('.sort_on').removeClass('sort_on');
+          $('#price').addClass('sort_on');
+          gridList(data);
+        });
+        
+        $('#day_payment').on('click', function () {
+          var dayArr = data.filter(function(item){    
+            return item.day_payment === "T";
+          }); 
+          
+          $('.sort_on').removeClass('sort_on');
+          $('#day_payment').addClass('sort_on');
+          gridList(dayArr);
+        });
+        
+        $('#street_order').on('click', function () {
+          gridList(data);
+          $('.sort_on').removeClass('sort_on');
+          $('#street_order').addClass('sort_on');
+        });
+        
+        $('#newest').on('click', function () {
+          data.sort(function(a, b) { 
+            return a["created_at"] - b["created_at"];
+          });
+        
+          $('.sort_on').removeClass('sort_on');
+          $('#newest').addClass('sort_on');
+          gridList(data);
+        });
+        
+        $(document).on('click', '.fa-star', function () {
+          var id = $(this).data('bussiness_id');
+          
+        })
+      });
+      
+      function enterkey() {
+          if (window.event.keyCode == 13) {
+            var address = $('#address').val();
+            var geocoder;
+            geocoder = new goolgle.maps.Geocoder();
+            geocoder.geocode({'address': address}, function(results, status) {
+              if(status == google.maps.GeocoderStatus.OK) {
+                var address_lat = results[0].geometry.location.lat();
+                var address_lng = results[0].geometry.location.lng();
+              } else {
+                var address_lat = '';
+                var address_lng = '';
+              }
+            });
+            
+            alert('주소 : ' + address + '\n\n위도 : ' + address_lat + '\n\n경도 : ' + address_lng);
+          }
+        }
+      $(document).ready(function() {
+        
+        
+        
       });
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7hFvqWN9sgQerWvWN7UTkRYI2yfKtlnk&callback=initMap&libraries=geometry,places">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7hFvqWN9sgQerWvWN7UTkRYI2yfKtlnk&callback=initMap&libraries=geometry,places&sensor=false">
     </script> 

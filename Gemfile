@@ -70,3 +70,5 @@ gem 'omniauth-kakao', '~> 0.2.0'
 gem 'oauth2'
 gem 'whenever'
 gem 'omniauth-oauth2'
+
+gem 'whenever', require: false

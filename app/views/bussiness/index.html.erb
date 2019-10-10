@@ -39,7 +39,7 @@
                     <span class="name"><%= @bussiness.bs_name %></span>
                     &nbsp;&nbsp;<a href="/bussiness/change_bs" title="사업장변경"><i class="fas fa-chevron-down"></i></a>
                     <br>
-                    <%= @bussiness.address %><br>02-123-4567
+                    <%= @bussiness.address %><br><%= @bussiness.phone %>
                     <% else %>
                 <br>
                 사업장을 등록해주세요. <br />
@@ -47,7 +47,7 @@
               
 
               <div class="btn_area">
-              <span id="location">사업장 추가</span>
+              <span id="location"><i class="fas fa-plus"></i>사업장 추가</span>
               </div>
             </div>
             
@@ -56,18 +56,13 @@
 
         </div>
 
-
-
-
-  
-
-
+      <% if @bussiness != nil %>
       <ul class="tabs">
-          <li class="active" rel="tab1">진행중 <div>4</div></li>
-          <li rel="tab2">마감 <div>10</div></li>
+          <li class="active" rel="tab1">진행중 <div><%= @job.length %></div></li>
+          <li rel="tab2">마감 <div><%= @job_end.length %></div></li>
 
       </ul>
-
+      <% end %>
 <div id="container" class="tab_container">
 
           <!-- #tab1 : 지원중 -->
@@ -82,16 +77,20 @@
                           <div class="img"></div>
                           <div class="info">
                               <div class="title"><%= job.bs_name %> <span><%= job.address %></span></div>
-                              <a href="#" class="tag">#바리스타</a>
-                              <a href="#" class="tag">#서빙</a>
-                              <a href="#" class="tag">#당일지급</a>
+                              <% @tag.each do |tag| %>
+                                <% if tag.job_id.to_i == job.id %>  
+                                  <a href="#" class="tag">#<%= tag.sort %></a>
+                                <% end %>
+                              <% end %>
                           </div>
                       </section>
         
                       <ul class="info2">
                       <li><%= job.date %></li>
                       <li><%= job.time_start %>시 ~ <%= job.time_end %>시</li>
-                      <li>시급 <%= job.pay %>원 <span class="icon-blue">당일지급</span></li>
+                      <% if job.day_payment == 'T' %>
+                        <li>시급 <%= job.pay %>원 <span class="icon-blue">당일지급</span></li>
+                      <% end %>
                       </ul>
                        
                       <ul class="info3">
@@ -117,10 +116,47 @@
           
 
           <div id="tab2" class="tab_content">
-
-
-
-
+            <% if @job_end != nil %>
+            <ul class="work_list">
+              <% @job_end.each do |job| %>
+                  <li class="job_list" data-id=<%= job.id %>> 
+                      <section>
+                          <a href="#" class="icon_fav"></a>
+                          <div class="img"></div>
+                          <div class="info">
+                              <div class="title"><%= job.bs_name %> <span><%= job.address %></span></div>
+                              <% @tag.each do |tag| %>
+                                <% if tag.job_id.to_i == job.id %>  
+                                  <a href="#" class="tag">#<%= tag.sort %></a>
+                                <% end %>
+                              <% end %>
+                          </div>
+                      </section>
+        
+                      <ul class="info2">
+                      <li><%= job.date %></li>
+                      <li><%= job.time_start %>시 ~ <%= job.time_end %>시</li>
+                      <% if job.day_payment == 'T' %>
+                        <li>시급 <%= job.pay %>원 <span class="icon-blue">당일지급</span></li>
+                      <% end %>
+                      </ul>
+                       
+                      <ul class="info3">
+                      <li><i class="fas fa-user"></i> 지원자 <%= job.personnel_cnt %> / <%= job.personnel %></li>
+                      <li><i class="fas fa-sync-alt"></i> 재등록하기</li>
+                      </ul>     
+                      
+                  </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <br />
+            등록된 일자리가 없습니다.
+          <% end %>
+          
+          <% if @bussiness != nil %>
+            <input type="hidden" id="bussiness" value=<%= @bussiness.id %>>
+          <% end %>
           </div>
 
 

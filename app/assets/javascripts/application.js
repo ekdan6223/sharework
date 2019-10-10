@@ -13,3 +13,22 @@
 //= require rails-ujs
 //= require activestorage
 //= require_tree .
+
+function Comma(pay) {
+    var result = Number(pay.replace(/[^0-9]/g,''));
+    result = result.toLocaleString();
+    return result;
+}
+
+function RemoveComma(pay) {
+    var result = pay;
+    result = pay.replace(/,/gi, "");
+    return result;
+}
+
+function htmlComma(pay) {
+    alert(1);
+    var result = Number(pay.replace(/[^0-9]/g,''));
+    result = result.toLocaleString();
+    $('#pay').text(result);
+}

@@ -1,13 +1,40 @@
 <script>
   $(function(){
+    $('#btn-hired').on('click', function () {
+      var user_name = $(this).data('name');
+      
+      if (confirm(user_name + "님을 채택하시겠습니까?") == true){    //확인
+          var f = document.writeForm;
+          f.submit();
+          $("#div-application").load(window.location.href + " #div-application");
+      }else{   //취소
+          return;
+      }
+      
+      
+    });
     
+    $('#btn-delete').on('click', function () {
+      if (confirm("정말로 삭제하시겠습니까?") == true){    //확인
+      /////////////ajax로 삭제하자
+          var f = document.deleteForm;
+          f.submit();
+          $("#div-application").load(window.location.href + " #div-application");
+      }else{   //취소
+          return;
+      }
+    });
   });
 </script>
 
 
 <div id="wrap" class="st_info">
   
-<div id="top_title2"><i class="fas fa-chevron-left" onClick="history.back();"></i> 구인 상세내역</div>
+<div id="top_title2"><i class="fas fa-chevron-left" onClick="history.back();"></i> 구인 상세내역
+  <% if @job.status != 'close' %>
+    <button id="btn-delete">삭제</button>
+  <% end %>
+</div>
   
 
   <div class="st_content">
@@ -21,14 +48,14 @@
           
           <tr>
             <th>시간</th>
-            <td><%= @job.time_start %>시 ~ <%= @job.time_end %>시</td>
+            <td><%= @job.time_start %> ~ <%= @job.time_end %></td>
           </tr>
           
           
           <tr>
             <th>시급 </th>
             <td>
-              <%= @job.pay %>원 <span class="total">예상 지급 : 300,000원</span></td>
+              <%= @job.pay %>원 <span class="total">예상 지급 : <%= @payment %>원</span></span></td>
           </tr>
           
           <tr>
@@ -51,11 +78,14 @@
       
 
       <div id="container" class="ap_wrap">
-        
-          <a href="/bussiness/show_applicant?id=<%= @job.id %>">지원자 현황</a>
-         
+          <% if @job.status != 'close' %>
+            <a href="/bussiness/show_applicant?id=<%= @job.id %>">지원자 현황</a>
+            <% elsif @job.status == 'close' %>
+              <a href="/bussiness/show_applicant?id=<%= @job.id %>">일한사람</a>
+          <% end %>
+          <div id="div-application" style="width: 100%; height: 100%;">
           <% @application.each do |application| %>
-            <div class="application_list" data-id=<%= application.id %>>
+            <div class="application_list" data-id=<%= application.id %> >
               
                 <div class="pull-left col-md-3">
                   <div class="profile_thumb">
@@ -72,15 +102,30 @@
                 
                 
                 <div class="pull-right col-md-3">
-                 <a href="#"><i class="fas fa-check"></i> 채택하기</a>
+                  <% if application.status == 'hired' %>
+                    <a href="#" style="background-color: #B2EBF4"><i class="fas fa-check"></i> 채택하기</a>
+                    
+                    <% elsif application.status == 'appried' %>
+                      <a href="#" id="btn-hired" data-name=<%= application.name %>><i class="fas fa-check"></i> 채택하기</a>
+                  <% end %>
+                 
                  <a href="tel:<%= application.phone %>"><i class="fas fa-phone-alt"></i> 전화걸기</a>
   
                 </div>
 
             </div>
+            
+            <form method="post" name="writeForm" action="/bussiness/hiredApplication">
+                <input type="hidden" name="job_id" value=<%= @job.id %>>
+                <input type="hidden" name="user_id" value=<%= application.user_id %>>
+            </form>
           <% end %>
-    
+          </div>
+          
+          <form method="post" name="deleteForm" action="/bussiness/hiredApplication">
+              <input type="hidden" name="job_id" value=<%= @job.id %>>
+          </form>
+          
      </div>
-     
      
 </div><!--wrap-->

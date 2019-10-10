@@ -1,0 +1,2 @@
+class Albafav < ApplicationRecord
+end

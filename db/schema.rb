@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_13_052807) do
+ActiveRecord::Schema.define(version: 2019_10_09_052521) do
+
+  create_table "alba_favs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "albafavs", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "business_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "applications", force: :cascade do |t|
     t.string "user_id"
@@ -67,6 +79,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_052807) do
     t.integer "personnel_cnt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "day_payment"
   end
 
   create_table "lib_tags", force: :cascade do |t|
@@ -82,6 +95,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_052807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "job_id"
+    t.string "bussiness_id"
   end
 
   create_table "users", force: :cascade do |t|

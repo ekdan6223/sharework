@@ -1,10 +1,31 @@
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script>
+$(function(){
+      $('#menu').remove();   
+});
+    
+</script>
+
+<style>
+  
+.btn_select_type {position:relative;width:85%;height:100px;text-align:right;padding-right:30px;margin-bottom:20px;
+font-size:14pt;font-weight:500;border: 0;}  
+.btn_select_type span {font-size:12pt;font-weight:normal;color:#97d3d4;}
+
+</style>
+
+<div id="wrap" class="index ">
+
 <form action= "/login/choose/<%= current_user.id %>" method="post">
   <input type="hidden" name="usertype" value="0">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <input type="submit" value="알바생">
+  <button type="submit" class="btn_select_type"><span>일자리를 구하시나요?</span><br>알바생으로 가입하기</button>
 </form>
 <form action= "/login/choose/<%= current_user.id %>" method="post">
   <input type="hidden" name="usertype" value="1">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <input type="submit" value="업주">
+  <button type="submit" class="btn_select_type"><span>알바생을 찾으시나요?</span><br>업주로 가입하기</button>
 </form>
+
+</div>

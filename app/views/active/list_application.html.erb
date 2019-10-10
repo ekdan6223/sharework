@@ -14,16 +14,33 @@
   $(function() {
     $('.danger').on('click', function(){
       var id = $(this).data('id');
+      var name = $(this).data('name');
       
-      $.post('/active/appriedCancel', { id: id }, 
-      function(returnedData){
-           console.log(returnedData);
-      }).fail(function(){
-        alert('error');
-      }).done(function(){
-        window.location.reload();
-        createToast($(this).attr('class'));
-      });
+      if (confirm(name + " 지원을 취소하시겠습니까?") == true){    //확인
+          $.post('/active/appriedCancel', { id: id }, 
+          function(returnedData){
+               console.log(returnedData);
+          }).fail(function(){
+            alert('error');
+          }).done(function(){
+            window.location.reload();
+            createToast($(this).attr('class'));
+          });
+      }else{   //취소
+          return;
+      }
+      
+      
+    });
+    
+    $('.li-progressList').on('click', function () {
+      var id = $(this).data('id');
+      location.href = "/active/create_application?id=" + id;
+    });
+    
+    $('.li-deadlineList').on('click', function () {
+      var id = $(this).data('id');
+      location.href = "/active/deadline_application?id=" + id;
     });
   });
 </script>
@@ -35,16 +52,16 @@
   <div id="top_title2">지원내역</div>
   
       <ul id="status">
-        <li><span>근무시간</span><br>30시간 10분</li>
-        <li><span>알바비</span><br>250,000원</li>
+        <li><span>근무시간</span><br><%= @total_time %>분</li>
+        <li><span>알바비</span><br><%= @total_pay %>원</li>
       </ul>
  
       <div id="graybar"></div>
        
 
       <ul class="tabs">
-          <li class="active" rel="tab1">지원중 <div>4</div></li>
-          <li rel="tab2">마감 <div>10</div></li>
+          <li class="active" rel="tab1">지원중 <div><%= @application.length %></div></li>
+          <li rel="tab2">마감 <div><%= @application_end.length %></div></li>
 
       </ul>
       
@@ -58,27 +75,36 @@
               
               <ul class="work_list">
                 <% @application.each do |a| %>
-                  <% if a.status == 'appried' %>
-                    <li> 
+                  
+                    <li class="li-progressList" data-id=<%= a.job_id %>> 
                         <section>
                             <a href="#" class="icon_fav"><i class="far fa-star"></i></a>
                             <div class="img"><img src="https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg"></div>
                             <div class="info">
-                                <div class="title"><%= a.bs_name %> <span>서울,선릉로</span><span class="loc">250m</span></div>
-                                <a href="#" class="tag">#홀서빙</a>
-                                <a href="#" class="tag">#주방보조</a>
-                                <a href="#" class="tag">#당일지급</a>
+                                <div class="title"><%= a.bs_name %> <span><%= a.address %></span><span class="loc">250m</span></div>
+                                <% @tag.each do |tag| %>
+                                <% if tag.job_id == a.job_id %>  
+                                  <a href="#" class="tag">#<%= tag.sort %></a>
+                                <% end %>
+                              <% end %>
                             </div>
                         </section>
             
                             <ul class="info2">
                             <li><%= a.date %></li>
-                            <li><%= a.time_start %>시 ~ <%= a.time_end %>시</li>
+                            <li><%= a.time_start %> ~ <%= a.time_end %></li>
                             <li>시급 <%= a.pay %>원 <span class="icon-blue">당일지급</span></li>
                             </ul>
-                            <span class="danger btn_apply" data-id=<%= a.id %>>지원취소<i class="fas fa-chevron-right"></i></span>
+                            <% if a.status == 'appried' %>
+                              <span class="danger btn_apply" data-id=<%= a.id %> data-name=<%= a.bs_name %>>지원취소<i class="fas fa-chevron-right"></i></span>
+                              
+                              <% elsif a.status == 'hired' %>
+                                <span class="btn_apply" data-id=<%= a.id %>>진행중<i class="fas fa-chevron-right"></i></span>
+                              <% elsif a.status == 'rejected' %>
+                                <span class="btn_apply" data-id=<%= a.id %>>rejected됨<i class="fas fa-chevron-right"></i></span>
+                            <% end %>
                     </li>
-                   <% end %>
+                   
                 <% end %>
               </ul>
             
@@ -88,19 +114,39 @@
           
 
           <div id="tab2" class="tab_content">
-
-
-
-
+            <ul class="work_list">
+                <% @application_end.each do |a| %>
+                  
+                    <li class="li-deadlineList" data-id=<%= a.job_id %>> 
+                        <section>
+                            <a href="#" class="icon_fav"><i class="far fa-star"></i></a>
+                            <div class="img"><img src="https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg"></div>
+                            <div class="info">
+                                <div class="title"><%= a.bs_name %> <span><%= a.address %></span><span class="loc">250m</span></div>
+                                <% @tag.each do |tag| %>
+                                <% if tag.job_id == a.job_id %>  
+                                  <a href="#" class="tag">#<%= tag.sort %></a>
+                                <% end %>
+                              <% end %>
+                            </div>
+                        </section>
+            
+                            <ul class="info2">
+                            <li><%= a.date %></li>
+                            <li><%= a.time_start %> ~ <%= a.time_end %></li>
+                            <li>시급 <%= a.pay %>원 <span class="icon-blue">당일지급</span></li>
+                            </ul>
+                            <span class="btn_apply" data-id=<%= a.id %>>완료<i class="fas fa-chevron-right"></i></span>
+                    </li>
+                   
+                <% end %>
+              </ul>
           </div>
 
 
       </div>
       
       
-      
-      
-
   <script>
     $(function () {
     

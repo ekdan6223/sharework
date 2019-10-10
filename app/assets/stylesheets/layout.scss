@@ -156,7 +156,6 @@ border:0;border-radius:3px;padding-left:30px ;
 #sch input[type=text],
 #sch button {box-shadow:0px 3px 5px rgba(0,0,0,0.3);}
 
-#sch input[type=text] {width:calc(100% - 55px);border:1px solid #91d0cd;background:#fff;height:45px;line-height:45px;border-radius:3px;padding-left:50px;background:url('/img/icon_search.png') #fff no-repeat 15px center;background-size:20px auto;}
 
 #sch span {float:right;border:1px solid #91d0cd;background:#fff;width:45px;height:45px;line-height:45px;border-radius:3px;background:url('/img/icon_mylocation.png') #fff no-repeat center center;background-size:20px auto;}
 
@@ -165,7 +164,6 @@ border:0;border-radius:3px;padding-left:30px ;
 .sch_store input[type=text] {width:calc(100% - 100px) !important;}
 .sch_store button {background:#85d5d5;border:0;color:#fff;line-height:45px;
 float:right;width:90px;font-weight:500;border-radius:3px;}
-
 
 /*즐찾장소버튼*/
 #fav {position:absolute;top:65px;right:10px;width:45px}
@@ -183,9 +181,23 @@ box-shadow:0px 3px 5px rgba(0,0,0,0.3);}
 .recm {}
 .recm h5 {display:inline-block;*display:inline;float:left;padding:0;margin:0;}
 .recm .fa-sort-amount-down {float:right;font-size:12pt;color:#b0b0b0;margin-top:8px;}
+
+
+
+/*정렬버튼 - 거리순, 가격순, 최신순*/
+button.btn_sort {border:1px solid #ddd;color:#8a8a8a;padding:5px 6px;font-size:11pt;margin:0;float:left;background:#fff;} 
+#street_order {border-right:0;} 
+#newest {border-left-color:#ededed;border-right-color:#ededed;} 
+#price {border-left:0;} 
+button.sort_on {background:#97d3d4;color:#fff;border:1px solid #97d3d4}
+
+/*정렬버튼 - 당일지급*/
+.btn_sort2 {border:0;color:#8a8a8a;padding:5px 6px;font-size:11pt;margin:0;float:left;margin-right:5px;background:#fff} 
+.sort2_on {background:#1a50b0;border:1px solid #1a50b0;color:#fff;}
+
+       
         
-.work_list {position:relative;padding:0;margin:0 0 15px 0;display:inline-block;*display:inline;}
-.work_list > li {position:relative;padding:15px;margin:0;width:100%;list-style:none;border:1px solid #82d7d2;border-radius:5px;box-shadow:3px 3px 3px #ddf4f3;margin-bottom:15px;}
+.work_list {position:relative;padding:0;margin:15px 0 15px 0;display:inline-block;*display:inline;}
 .work_list > li:hover {cursor:pointer;box-shadow:3px 3px 3px #cde9e8;background:#f1fffe;}
 
 .work_list > li section {position:relative;float:left;width:100%;border-bottom:1px solid #ddd;padding-bottom:10px;}
@@ -208,7 +220,7 @@ a.tag:hover {background:#e9f7ff;border-radius:3px;}
 .work_list .info2 li:nth-child(2) {background:url('/img/icon_time.png') no-repeat left center;background-size:15px auto;}
 .work_list .info2 li:nth-child(3) {background:url('/img/icon_pay.png') no-repeat left center;background-size:15px auto;}
 
-
+.work_list .fa-star {z-index:999;}
 
 .job_list {padding:15px 15px 0 15px !important;}
 .job_list .info3 {position:relative;width:100%;padding:10px 0 0 0;margin:0;}
@@ -266,19 +278,26 @@ font-weight:500;padding:10px 20px 10px 30px;border-radius:50px;}
 #menu {position:fixed;background:#f5f5f5;width:100%;height:70px;text-align:center;border-top:1px solid #ddd;left: 0;bottom: 0;}
 #menu ul {position:relative;width:100%;max-width:500px;margin:0 auto;padding:0;}
 
-#menu ul li {float:left;width:20%;height:55px;}
+#menu ul li {float:left;width:25%;height:55px;}
 #menu ul li:first-child {background:url('/img/icon_menu_home.png') no-repeat center center;background-size:30px auto;}
 #menu ul li:nth-child(2) {background:url('/img/icon_menu_fav.png') no-repeat center center;background-size:30px auto;}
+
+
+/*
 #menu ul li:nth-child(3) {}
 #menu ul li:nth-child(3) div {width:90px;height:90px;border-radius:50%;background:url('/img/icon_menu_location.png') #82d7d2 no-repeat center center;
 background-size:30px auto;margin-top:-30px;}
-#menu ul li:nth-child(4) {background:url('/img/icon_menu_list.png') no-repeat center center;background-size:30px auto;}
-#menu ul li:nth-child(5) {background:url('/img/icon_menu_mypage.png') no-repeat center center;background-size:30px auto;}
+*/
+
+#menu ul li:nth-child(3) {background:url('/img/icon_menu_list.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(4) {background:url('/img/icon_menu_mypage.png') no-repeat center center;background-size:30px auto;}
 
 #menu ul li:first-child.on {background:url('/img/icon_menu_home_on.png') no-repeat center center;background-size:30px auto;}
+
 #menu ul li:nth-child(2).on {background:url('/img/icon_menu_fav_on.png') no-repeat center center;background-size:30px auto;}
-#menu ul li:nth-child(4).on {background:url('/img/icon_menu_list_on.png') no-repeat center center;background-size:30px auto;}
-#menu ul li:nth-child(5).on {background:url('/img/icon_menu_mypage.png') no-repeat center center;background-size:30px auto;}
+
+#menu ul li:nth-child(3).on {background:url('/img/icon_menu_list_on.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(4).on {background:url('/img/icon_menu_mypage.png') no-repeat center center;background-size:30px auto;}
 
 
 
@@ -319,7 +338,7 @@ ul.tabs li.active div {background:#82d7d2;}
 .btn_modify {border:0;position:absolute;right:20px;top:40px;width:30px;height:30px;background:url('/img/icon_setting.png') no-repeat center center; background-size:30px auto;}
 
 #profile  .btn_area {position:absolute;top:0;right:0;}
-#profile  .btn_area span {}
+#profile .btn_area span {border:1px solid #fff;border-radius:10px;}
 
 
 
@@ -369,3 +388,11 @@ ul.tabs li.active div {background:#82d7d2;}
 #bsList ul li.select {background-color: #e8f6f6;}
 #bsList ul li.select .fa-check-circle {color:#85d5d5 !important;}
 #bsList .new b {color:#666;}
+
+
+#alert-success,
+#alert-danger {margin:0 0 7px 0;} 
+
+
+#alert-success {color:#97d3d4}
+#alert-danger {color:#e0433f;}

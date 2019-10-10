@@ -209,9 +209,9 @@ function getListItem(index, places) {
 
     var el = document.createElement('li'),
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                '<div class="info" data-place_name=' + places.place_name + ' data-address_name=' + places.address_name + ' data-phone=' + places.phone + ' data-x=' + places.x + ' data-y=' + places.y + '>' +
+                '<div class="info" data-place_name=' + places.place_name.replace(/ /gi,"&nbsp;") + ' data-address_name=' + places.address_name.replace(/ /gi,"&nbsp;") + ' data-phone=' + places.phone + ' data-x=' + places.x + ' data-y=' + places.y + '>' +
                 '   <h5>' + places.place_name + '</h5>';
-
+    
     if (places.road_address_name) {
         itemStr += '    <span>' + places.road_address_name + '</span>' +
                     '   <span class="jibun gray">' +  places.address_name  + '</span>';
@@ -264,7 +264,10 @@ $(function(){
     var phone = $(this).data("phone");
     var y = $(this).data("y");
     var x = $(this).data("x");
-    
+    if(phone.match("data")){
+        phone = '전화번호가 없습니다.';
+        x = $(this).data('phone').substring(7);
+    }
     var result = confirm('업체명 ' + bs_name + ', 주소 ' + address + ' 맞습니까?');
     
     var param = {};
@@ -296,7 +299,7 @@ $(function(){
       
       var f = document.writeform; 
       f.bs_name.value = bs_name; 
-      f.address.value = address; 
+      f.address.value = address;
       f.phone.value = phone; 
       f.y.value = y;
       f.x.value = x;
