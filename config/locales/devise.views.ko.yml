@@ -121,7 +121,7 @@ ko:
         didn_t_receive_unlock_instructions: 잠금 해제 이메일을 못받으셨나요?
         forgot_your_password: 비밀번호를 잊으셨나요?
         sign_in: 로그인
-        sign_in_with_provider: "%{provider}(으)로 로그인"
+        sign_in_with_provider: "%{provider}로 로그인"
         sign_up: 회원 가입
       minimum_password_length: 
     unlocks:

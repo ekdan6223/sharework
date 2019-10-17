@@ -75,23 +75,19 @@
         </div>
 
 
-
-        
-        
-
-
-
     </div><!--wrap-->
     
-    
-    
-    
-
-        
-
+ 
 
 
     <script>
+      $(function () {
+        $('#menu_active').addClass('on');
+        $('#menu_favorites').removeClass('on');
+        $('#menu_application').removeClass('on');
+        $('#menu_mypage').removeClass('on');
+      });
+      
       var map, infoWindow;
       var markers, marker;
       var pos = {};

@@ -4,7 +4,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
  has_many :identities, dependent: :destroy
- has_many :alba_favs, dependent: :destroy
+ #has_many :alba_favs, dependent: :destroy
   def self.find_for_oauth(auth, signed_in_resource = nil)
     # user와 identity가 nil이 아니라면 받는다
     identity = Identity.find_for_oauth(auth)

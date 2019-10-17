@@ -1,0 +1,39 @@
+<div id="wrap" class="st_info">
+
+    
+  <div id="top_title2"><i class="fas fa-chevron-left" onClick="history.back();"></i> 약관</div>
+  
+  
+        <ul class="tabs">
+          <li class="active" rel="tab1">이용약관</li>
+          <li rel="tab2">개인정보취급방침</li>
+      </ul>
+  
+     <div id="container" class="tab_container">
+        <div id="tab1" class="tab_content">11111</div>
+  
+        <div id="tab2" class="tab_content">22222</div>
+  
+
+
+      </div>
+      
+      
+  <script>
+    $(function () {
+    
+      $(".tab_content").hide();
+      $(".tab_content:first").show();
+      
+      $("ul.tabs li").click(function () {
+      $("ul.tabs li").removeClass("active").css("color", "#8a8a8a");
+      $(this).addClass("active").css("color", "#82d7d2");
+      $(".tab_content").hide()
+      var activeTab = $(this).attr("rel");
+      $("#" + activeTab).fadeIn()
+      });
+    });
+		</script>
+
+
+</div>

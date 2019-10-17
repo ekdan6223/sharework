@@ -27,8 +27,21 @@ function RemoveComma(pay) {
 }
 
 function htmlComma(pay) {
-    alert(1);
+    alert(1)
     var result = Number(pay.replace(/[^0-9]/g,''));
     result = result.toLocaleString();
     $('#pay').text(result);
+}
+
+function myFunction() {
+  var person = prompt("아직 개발중입니다. 비밀번호를 입력해주세요.", "");
+
+  if (person == 'wjdvy95') {
+    document.getElementsByClassName("intro")[0].style.display = "none";
+    document.getElementsByClassName("original")[0].style.display = "block";
+    
+  }else{
+    document.getElementsByClassName("intro")[0].style.display = "block";
+    document.getElementsByClassName("original")[0].style.display = "none";
+  }
 }

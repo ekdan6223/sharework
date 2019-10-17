@@ -1,42 +1,112 @@
-<div id="wrap" class="index"><!--wrap-->
-<img src="/img/logo.png" class="logo wow slideInUp" data-wow-duration="2s" data-wow-delay="0.5s"><br>
-<div class="wow slideInUp" data-wow-duration="2s" data-wow-delay="2s">실시간 알바 매칭 가이드</div>
 
-<br style="clear:bot;">
 
-<div class="form_wrap" style="display:none;">
+<div id="wrap" class="index intro" style="margin:0 auto;float:none;">
+      
+         <img src="http://ndesign.co.kr/sharework/img/logo.png" class="logo wow slideInUp" data-wow-duration="2s" data-wow-delay="0.5s"><br>
+         <div class="">실시간 알바 매칭 가이드</div>
+          
+           <p>현재 서비스 준비중입니다.</p>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "frm_default frm_fa", placeholder: "아이디" %>
-  </div>
+         
+         <h3>Members.</h3>
+         <img src="http://ndesign.co.kr/sharework/member.png" class="member">
+         
+         
+         
+         <h3>More info.</h3>
+         
+         <div class="btn_area">
+         <a href="https://www.youtube.com/watch?v=6Jnkhv5iQGI" class="btn_youtube" target="_blank"></a>
+         <a href="http://pf.kakao.com/_IhhxmT" class="btn_kakao" target="_blank"></a>
+         </div>
+         
+                  
+         <h3><a onclick="myFunction()"><i class="fas fa-ban"></i> Staff only.</a></h3>
+         
+       
+         
+</div>
+
+<div id="wrap" class="index original" style="margin:0 auto;float:none;display:none;">
+      
+          <img src="http://ndesign.co.kr/sharework/img/logo.png"  class="logo wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s"><br>
+          <div class="wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s">실시간 알바 매칭 가이드</div>
+          
+          <br style="clear:both;">
+
+          <div id="sns_login_wrap" style="margin-top:120px;" class="wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="1s">
+          <%= render "devise/shared/links" %><br/>
+          <%= link_to "회원가입", "/users/sign_up", class: "sns_login email" %>
+          </div>
+          
+          <div id="login_area">
+          이미 회원이신가요?
+          <a href="#" data-toggle="modal" data-target="#loginModal" style="color:#fff;">로그인</a>
+          </div>
+
+</div>
+
+
+
+
+
+
+<!-- Modal //로그인창 -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">회원로그인</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+                <div class="form_wrap" style="max-width:380px;">
+                
+                <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                  <div class="field">
+                    <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "frm_default frm_fa", placeholder: "아이디" %>
+                  </div>
+                
+                  <div class="field">
+                    <span><i class="fa fa-lock" aria-hidden="true" style="font-size:15pt;"></i></span>
+                    <%= f.password_field :password, autocomplete: "current-password", class: "frm_default frm_fa", placeholder: "패스워드" %>
+                  </div>
+                
+                  <% if devise_mapping.rememberable? %>
+                    <div class="field rememberme">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me %>
+                    </div>
+                  <% end %>
+                
+                   <%= f.submit "로그인",  class: "btn_login" %>
   
-  <div class="field">
-    <span><i class="fa fa-lock" aria-hidden="true" style="font-size:15pt;"></i></span>
-    <%= f.password_field :password, autocomplete: "current-password", class: "frm_default frm_fa", placeholder: "패스워드" %>
-  </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+                <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                  <%= link_to t(".패스워드찾기"),  new_password_path(resource_name), class: "btn_lg btn_bd_gray mg-top-10" %><br />
+                <% end %>
+
+
+                <% end %>
+          </div>
+
+      </div>
+
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "로그인",  class: "btn_login" %>
   </div>
-<% end %>
-</div>
-
-<div id="sns_login_wrap" style="margin-top:120px;">
-  
-<%= render "devise/shared/links" %><br/>
-<%= link_to "회원가입", "/users/sign_up", class: "sns_login email" %>
-</div>
-
 </div>
 
 
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="http://ndesign.co.kr/sharework/js/wow.min.js"></script>
+
+<script>
+$(function(){
+  new WOW().init(); 
+});
+</script>
+          

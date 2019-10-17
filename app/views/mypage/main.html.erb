@@ -1,4 +1,12 @@
-
+    <script>
+        $(function () {
+            $('#menu_active').removeClass('on');
+            $('#menu_favorites').removeClass('on');
+            $('#menu_application').removeClass('on');
+            $('#menu_mypage').addClass('on');
+        });
+    </script>
+    
     <div id="wrap"><!--wrap-->
 
         <div id="profile">
@@ -12,19 +20,19 @@
             </div>
             <div class="pull-right col-md-9">
 
-                <span class="name"><%=current_user.name%> </span> <span class="certi">인증회원</span><br>
-                <%if current_user.provider == 'kakao'%><!--kakao 로그인 한 회원-->
-                    <%=current_user.provider%>연동<br/>
-                    <%=current_user.bankName%><%=current_user.accountNum%>    
-                <%elsif current_user.provider == 'naver'%><!--naver 로그인 한 회원-->
-                    <%=current_user.provider%>연동<br/>
-                    <%=current_user.bankName%><%=current_user.accountNum%>
+                <span class="name"><%=current_user.name%> </span> <!--<span class="certi">인증회원</span>-->
+                
+                <%if current_user.provider == 'kakao'%>
+                <span class="certi_sns kakao>카카오톡 연동</span><br/>
+                <%elsif current_user.provider == 'naver'%>
+                <span class="certi_sns naver">네이버 연동</span><br/>
                 <%else%>
                     <%=current_user.provider%>연동<br/>
-                    <%=current_user.accountNum%>
                 <%end%>
-                <br/>
-                <%if current_user.phone? %><%=current_user.phone%><%end %>
+                <ul class="user_info">
+                <li><%if current_user.accountNum? %><%=current_user.bankName%><%=current_user.accountNum%><br><%else%><span class="sm_notice"><i class="fas fa-exclamation-circle"></i> 계좌정보를 입력해주세요.</span><%end%></li>
+                <li><%if current_user.phone? %><%=current_user.phone%><%else%><span class="sm_notice"><i class="fas fa-exclamation-circle"></i> 핸드폰 번호를 입력해주세요.</span><%end%></li>
+                </ul>
                 
                 <button class="btn_modify" onclick="location.href='/add_information/add/<%=current_user.id%>'"></button>
                 
@@ -61,8 +69,8 @@
                 
                 </li>
 
-                <li class="arrow">공지사항</li>
-                <li class="arrow">이용약관</li>
+                <li class="arrow"><a href="/mypage/notice_list">공지사항</a></li>
+                <li class="arrow"><a href="/mypage/terms">이용약관</a></li>
                 <li class="arrow">고객문의</li>
                 <!--<li class="arrow"> <a href="/add_information/add/<%=current_user.id%>">추가정보 입력 및 수정하기</a></li>-->
                 <% if user_signed_in? %>

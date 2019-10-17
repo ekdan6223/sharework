@@ -149,9 +149,21 @@ class BussinessController < ApplicationController
       #OR
       #tStartB < tStartA  && tEndB > tEndA //For case 3
     end
-    
-    
-    
+  end
+  
+  def add_bussiness_fav
+    fav = Albafav.find_by(bussiness_id: params[:bussiness_id], user_id: current_user.id)
+    puts '---------------'
+    puts fav
+    if fav == nil
+      @albafavs = Albafav.new
+      @albafavs.user_id = current_user.id
+      @albafavs.bussiness_id = params[:bussiness_id]
+      @albafavs.save
+    elsif fav != nil
+      @albafavs = Albafav.find_by(user_id: current_user.id, bussiness_id: params[:bussiness_id])
+      @albafavs.destroy
+    end
   end
 
   def insert_comma(string)

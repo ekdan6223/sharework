@@ -31,6 +31,19 @@
         //window.location.reload();
         $(".btn_apply").load(window.location.href + " .btn_apply");
       });
+      
+      $('#bussiness-fav').on('click', function () {
+        var id = $(this).data('id');
+        
+        $.post('/bussiness/add_bussiness_fav', {bussiness_id: id}, 
+        function(returnedData){
+            $("#bussiness-fav").load(window.location.href + " #bussiness-fav");
+        }).fail(function(){
+          alert('error');
+        });
+      });
+      
+      
     });
 </script>
 
@@ -41,7 +54,13 @@
   
    <!--업체정보 상단-->
     <div class="st_top">
-        <div class="icon_fav"><i class="far fa-star"></i></div>
+        <div class="icon_fav">
+          <% if @albafav == nil %>
+            <i class="far fa-star" id="bussiness-fav" data-id=<%= @bussiness.id %>></i>
+            <% elsif @albafav != nil %>
+              <i class="fas fa-star" id="bussiness-fav" data-id=<%= @bussiness.id %> style="color: #ffd200"></i>
+          <% end %>
+        </div>
         
         <div class="img"><img src="http://cdnimage.ebn.co.kr/news/201710/news_1509339728_915222_main1.jpg"></div>
        

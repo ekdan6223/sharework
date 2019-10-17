@@ -1,4 +1,11 @@
 <script>
+  $(function () {
+    $('#menu_active').removeClass('on');
+    $('#menu_favorites').removeClass('on');
+    $('#menu_application').addClass('on');
+    $('#menu_mypage').removeClass('on');
+  });
+  
   function createToast(t) {
     switch (t) {
       case 'danger':

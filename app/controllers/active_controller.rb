@@ -13,7 +13,6 @@ class ActiveController < ApplicationController
     @job = @job.to_json
     
     @tag = Tag.select('lib_tags.*, tags.*').joins(:lib_tag).to_json
-    puts @tag
   end
   
   def selectTag
@@ -45,6 +44,8 @@ class ActiveController < ApplicationController
     
     @bussiness = Bussiness.find(@job.bussiness_id)
     @tag = Tag.select('lib_tags.*, tags.*').joins(:lib_tag).where(job_id: params[:id])
+    
+    @albafav = Albafav.find_by(user_id: current_user.id, bussiness_id: @bussiness_id)
   end
   
   def createApplication
@@ -62,22 +63,37 @@ class ActiveController < ApplicationController
   end
   
   def create_favorites
+    @albafav = Albafav.select('bussinesses.*, albafavs.*').joins(:bussiness).where(user_id: current_user.id)
+    #2차원 배열 써보자
+    @job = []
+    @tag = []
     
+    @albafav.each do |t|
+        Job.where(bussiness_id: t.bussiness_id, status: 'open').each do |j|
+            @job.push(j)
+        end
+        Tag.select('lib_tags.*, tags.*').joins(:lib_tag).where(bussiness_id: t.bussiness_id).each do |tag|
+            @tag.push(tag)
+        end
+    end
+    
+    puts '----------'
+    #@job = Job.select('alvafavs.*, jobs.*').joins(:job).where(user_id: current_user.id, jobs: {bussiness_id: alvafavs.bussiness_id})
   end
   
-  def createFavorites
-    @favorites = Favorite.new
-    @favorites.y = params[:y]
-    @favorites.x = params[:x]
-    @favorites.user_id = current_user.id
-    @favorites.save
+  #def createFavorites
+  #  @favorites = Favorite.new
+  #  @favorites.y = params[:y]
+  #  @favorites.x = params[:x]
+  #  @favorites.user_id = current_user.id
+  #  @favorites.save
     
-    redirect_to '/active/index1'
-  end
+  #  redirect_to '/active/index1'
+  #end
   
   def list_application
     #지원중, 진행중
-    @application = Application.select('jobs.*, applications.*').joins(:job).where(user_id: current_user.id, status: 'hired').or(Application.select('jobs.*, applications.*').joins(:job).where(user_id: current_user.id, status: 'appried'))
+    @application = Application.select('jobs.*, applications.*').joins(:job).where(user_id: current_user.id, status: 'hired').or(Application.select('jobs.*, applications.*').joins(:job).where(user_id: current_user.id, status: 'appried')).or(Application.select('jobs.*, applications.*').joins(:job).where(user_id: current_user.id, status: 'rejected'))
     for i in 0..@application.length - 1
       start_date = Time.parse @application[i].time_start
       end_date =  Time.parse @application[i].time_end
@@ -86,7 +102,6 @@ class ActiveController < ApplicationController
       @application[i].pay = insert_comma(@application[i].pay.to_i)
       @application[i].time_start = @application[i].time_start[10..15]
       @application[i].time_end = @application[i].time_end[10..15]
-      
     end
     
     #마감

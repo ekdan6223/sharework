@@ -25,5 +25,6 @@ class Users::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
   def localnew
+    @block_pass = ENV['BLOCK_PASSWORD'];
   end
 end
