@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'bussiness/create_job'
   get 'bussiness/show_job'
   get 'bussiness/show_applicant'
+  get 'bussiness/_selection'
   post 'bussiness/insertTag'
   post 'bussiness/createJob'
   post 'bussiness/change'

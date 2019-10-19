@@ -165,6 +165,9 @@ class BussinessController < ApplicationController
       @albafavs.destroy
     end
   end
+  
+  def _selection
+  end
 
   def insert_comma(string)
       return string.to_s(:delimited)
