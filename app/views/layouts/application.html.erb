@@ -61,35 +61,15 @@
     <%#end %>
     <%= yield %>
     <% if user_signed_in? %>
-      <% if current_user.usertype =='1' %>
-        
-        <div id="menu">
-
-              <ul>
-                  <li id="menu_active" onclick="location.href='/active/'"></li>
-                  <li id="menu_favorites"></li>
-                  <li id="menu_application"></li>
-                  <li id="menu_mypage"></li>
-                  <li></li>
-                  <!--<li id="menu_geo"><div><a href="/active/geo_list"></a></div></li>-->
-                  
-
-              </ul>
-            
-        </div>
-        <% else %>
+      <% if current_user.usertype =='0' %> <!--알바일때-->
           <div id="menu">
-
               <ul>
                   <li id="menu_active"></li>
                   <li id="menu_favorites"></li>
                   <li id="menu_application"></li>
+                  <li id="menu_alram"></li>
                   <li id="menu_mypage"></li>
-                  <li></li>
-                  <!--<li id="menu_geo"><div><a href="/active/geo_list"></a></div></li>-->
-
               </ul>
-            
         </div>
       <% end %>
     <% end %>
@@ -138,6 +118,11 @@
     
     $('#menu_application').on('click', function(){
       location.href = "/active/list_application";
+    });
+    
+    $('#menu_alram').on('click', function(){
+      alert ('준비중');
+      //location.href = "/active/list_application";
     });
     
     $('#menu_mypage').on('click', function(){

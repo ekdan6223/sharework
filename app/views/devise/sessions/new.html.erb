@@ -30,7 +30,7 @@
 <div id="wrap" class="index original" style="margin:0 auto;float:none;">
       
           <img src="http://ndesign.co.kr/sharework/img/logo.png"  class="logo wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s"><br>
-          <div class="wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s">실시간 알바 매칭 가이드 ver1.1</div>
+          <div class="wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s">실시간 알바 매칭 가이드 ver1.1.1</div>
           
           <br style="clear:both;">
 
@@ -67,12 +67,12 @@
                 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                   <div class="field">
                    <div class="label_icon"><i class="fas fa-envelope"></i></div>
-                    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "frm_default frm_fa", style: "color:#666 !important",  placeholder: "아이디" %>
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "frm_default frm_fa",  placeholder: "아이디" %>
                   </div>
                 
                   <div class="field">
-                    <div class="label_icon"><i class="fas fa-lock" aria-hidden="true" style="font-size:15pt;"></i></div>
-                    <%= f.password_field :password, autocomplete: "current-password", class: "frm_default frm_fa", style: "color:#666 !important", placeholder: "패스워드" %>
+                    <div class="label_icon"><i class="fas fa-lock" aria-hidden="true"></i></div>
+                    <%= f.password_field :password, autocomplete: "current-password", class: "frm_default frm_fa", placeholder: "패스워드" %>
                   </div>
                 
                   <% if devise_mapping.rememberable? %>
@@ -82,7 +82,7 @@
                     </div>
                   <% end %>
                 
-                   <%= f.submit "로그인",  class: "btn_login" %>
+                   <%= f.submit "로그인",  class: "btn_lg btn_lightgreen" %>
   
 
                 <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
@@ -114,5 +114,6 @@ $(document).ready(function(){
     $("#wrap").css("height", $(window).height());
 });
 </script>
+
 
 
