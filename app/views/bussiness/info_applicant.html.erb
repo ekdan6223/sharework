@@ -1,0 +1,55 @@
+<script>
+  $(function () {
+    $(document).on('click', "#bussiness-fav", function () {
+      var id = $(this).data('id');
+      var bussiness_id = $(this).data('bussiness_id');
+      
+      $.post('/bussiness/add_alba_fav', {user_id: id, bussiness_id: bussiness_id}, 
+      function(returnedData){
+          $("#icon_fav").load(window.location.href + " #icon_fav");
+      }).fail(function(){
+        alert('error');
+      });
+    });
+  });
+</script>
+
+<div id="wrap" class="bs_profile">
+  
+  <div id="profile">
+      <div class="pull-left col-md-3">
+          <div class="icon_fav" >
+            <div id="icon_fav">
+            <% if @businessfav == nil %>
+              <i class="far fa-star" id="bussiness-fav" data-id='<%= @user.id %>' data-bussiness_id='<%= params[:bussiness_id] %>'></i>
+              <% elsif @businessfav != nil %>
+                <i class="fas fa-star" id="bussiness-fav" data-id='<%= @user.id %>' data-bussiness_id='<%= params[:bussiness_id] %>' style="color: #ffd200"></i>
+            <% end %>
+            </div>
+          </div>  
+          
+          <div class="profile_thumb">
+              <div class="btn_upload"><i class="fas fa-camera"></i></div>
+              <div class="pull-left col-md-3">
+                <div class="profile_thumb">
+                    <div class="img"><img src="<%=current_user.profileImg%>" alt="등록된 프로필 사진이 없습니다."></div>
+               </div>
+              </div>
+         </div>
+      
+      </div>
+      <div class="pull-right col-md-9">
+          <%= @user.name %> <br />
+          <%= @user.phone %> <br />
+          <%= @user.email %> <br />
+          <%= @user.address1 %> <br />
+      </div>
+  </div>
+  
+  <div id="container" class="tab_container">
+    경력<br />
+    <% @tag.each do |tag| %>
+      <%= tag.sort %> : <%= tag.sectors %></br>
+    <% end %>
+  </div>
+</div>

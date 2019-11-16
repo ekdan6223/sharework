@@ -26,11 +26,18 @@ function RemoveComma(pay) {
     return result;
 }
 
-function htmlComma(pay) {
-    alert(1)
-    var result = Number(pay.replace(/[^0-9]/g,''));
-    result = result.toLocaleString();
-    $('#pay').text(result);
+function eventToast(theme, msg) {
+    var toast = new ax5.ui.toast();
+    toast.setConfig({
+        icon: '<i class="fa fa-bell"></i>',
+        containerPosition: "top-right",
+        closeIcon: '<i class="fa fa-times"></i>'
+    });
+    
+    toast.push({
+        theme: theme,
+        msg: msg
+    });
 }
 
 function myFunction() {

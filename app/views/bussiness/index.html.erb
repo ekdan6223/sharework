@@ -16,10 +16,23 @@
     
     $('.job_list').on('click', function(){
       var id = $(this).data('id');
-      location.href = "/bussiness/show_job?id=" + id;
+      var bussiness_id = $(this).data('bussiness_id');
+      location.href = "/bussiness/show_job?id=" + id + "&bussiness_id=" + bussiness_id;
+    });
+    
+    $('#applicant-info').on('click', function () {
+      var id = $(this).data('id');
+      var bussiness_id = $(this).data('bussiness_id');
+      location.href = "/bussiness/info_applicant?id=" + id + "&bussiness_id=" + bussiness_id;
     });
   });
 </script>
+
+<style>
+  #applicant-info {
+    cursor: pointer;
+  }
+</style>
 
 <div id="wrap" class="bs_profile">
   
@@ -58,9 +71,9 @@
 
       <% if @bussiness != nil %>
       <ul class="tabs">
-          <li class="active" rel="tab1">진행중 <div><%= @job.length %></div></li>
-          <li rel="tab2">마감 <div><%= @job_end.length %></div></li>
-
+          <li class="active" rel="tab1" style="width: 33.3%">진행중 <div><%= @job.length %></div></li>
+          <li rel="tab2" style="width: 33.3%">마감 <div><%= @job_end.length %></div></li>
+          <li rel="tab3" style="width: 33.3%">인재관리</li>
       </ul>
       <% end %>
 <div id="container" class="tab_container">
@@ -71,7 +84,7 @@
           <% if @job != nil %>
             <ul class="work_list">
               <% @job.each do |job| %>
-                  <li class="job_list" data-id=<%= job.id %>> 
+                  <li class="job_list" data-id="<%= job.id %>" data-bussiness_id="<%= @bussiness.id %>"> 
                       <section>
                           <a href="#" class="icon_fav"></a>
                           <div class="img"></div>
@@ -119,7 +132,7 @@
             <% if @job_end != nil %>
             <ul class="work_list">
               <% @job_end.each do |job| %>
-                  <li class="job_list" data-id=<%= job.id %>> 
+                  <li class="job_list" data-id="<%= job.id %>" data-bussiness_id="<%= @bussiness.id %>"> 
                       <section>
                           <a href="#" class="icon_fav"></a>
                           <div class="img"></div>
@@ -159,7 +172,33 @@
           <% end %>
           </div>
 
-
+          <div id="tab3" class="tab_content">
+            <div style="width: 100%; height: 100%;">
+            <% @businessfav.each do |businessfav| %>
+              <div class="application_list" data-id=<%= businessfav.id %> >
+                
+                  <div class="pull-left col-md-3">
+                    <div class="profile_thumb">
+                        <div class="img"><img src="<%=current_user.profileImg%>" alt="등록된 프로필 사진이 없습니다."></div>
+                   </div>
+                  </div>
+                  
+                  
+                  <div class="pull-left col-md-6" id="applicant-info" data-id="<%= businessfav.user_id %>"  data-bussiness_id="<%= @bussiness.id %>">
+                    <b><%= businessfav.name %></b><span class="certi">인증회원</span><br />
+                    <%= businessfav.address1 %> <br />
+                    <%= businessfav.phone %> <br />
+                  </div>
+                  
+                  
+                  <div class="pull-right col-md-3">
+                    <a href="tel:<%= businessfav.phone %>"><i class="fas fa-phone-alt"></i> 전화걸기</a>
+                  </div>
+  
+              </div>
+            <% end %>
+            </div>
+          </div>
       </div>
       
       

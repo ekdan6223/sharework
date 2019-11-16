@@ -22,28 +22,35 @@
       }
       
       $('.success').on('click', function(){
+        var id = $('#job_id').val();
+        
         var con = confirm('지원하시겠습니까?');
         if(con == false) {
           return;
+        } else {
+          $.post('/active/createApplication', {job_id: id}, 
+          function(returnedData){
+              $('.btn_apply').css('background-color', 'gray').removeClass('success');
+              $('.btn_apply').text('지원완료');
+              $('.btn_apply').css('cursor', 'default');
+              eventToast('success', '지원하였습니다.');
+          }).fail(function(){
+            alert('error');
+          });
         }
-        var f = document.writeForm;
-        f.submit();
-        //window.location.reload();
-        $(".btn_apply").load(window.location.href + " .btn_apply");
+        
       });
       
-      $('#bussiness-fav').on('click', function () {
+      $(document).on('click', "#bussiness-fav", function () {
         var id = $(this).data('id');
         
         $.post('/bussiness/add_bussiness_fav', {bussiness_id: id}, 
         function(returnedData){
-            $("#bussiness-fav").load(window.location.href + " #bussiness-fav");
+            $("#icon_fav").load(window.location.href + " #icon_fav");
         }).fail(function(){
           alert('error');
         });
       });
-      
-      
     });
 </script>
 
@@ -54,12 +61,14 @@
   
    <!--업체정보 상단-->
     <div class="st_top">
-        <div class="icon_fav">
+        <div class="icon_fav" >
+          <div id="icon_fav">
           <% if @albafav == nil %>
             <i class="far fa-star" id="bussiness-fav" data-id=<%= @bussiness.id %>></i>
             <% elsif @albafav != nil %>
               <i class="fas fa-star" id="bussiness-fav" data-id=<%= @bussiness.id %> style="color: #ffd200"></i>
           <% end %>
+          </div>
         </div>
         
         <div class="img"><img src="http://cdnimage.ebn.co.kr/news/201710/news_1509339728_915222_main1.jpg"></div>
@@ -129,8 +138,8 @@
       <% end %>
   
           
-      <input type="hidden" name="job_id" value=<%= @job.id %>>
-      <div class="success btn_apply"><i class="far fa-edit"></i> 지원하기</div>
+      <input type="hidden" name="job_id" id="job_id" value=<%= @job.id %>>
+      <div class="success btn_apply" id="btn_apply"><i class="far fa-edit"></i> 지원하기</div>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   </form>
 

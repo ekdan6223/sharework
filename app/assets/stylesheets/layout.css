@@ -2,6 +2,8 @@
 @import url("/css/notosanskr.css");
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:800&display=swap");
+
+
 html {
   overflow-y: scroll; }
 
@@ -206,6 +208,8 @@ div, ul, li {
   margin: 0 auto; }
 
 /*//////////intro end //////*/
+
+
 /*form*/
 button {
   border-radius: 0;
@@ -367,16 +371,6 @@ a.btn_bd_gray {
   width: 100%;
   display: inline-block;
   *display: inline; }
-
-.field span {
-  position: absolute;
-  left: 0;
-  top: 0;
-  line-height: 50px;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  font-size: 13pt; }
 
 .frm_default {
   position: relative;
@@ -565,6 +559,16 @@ textarea.frm_default {
   background-size: 20px auto;
   margin-bottom: 10px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); }
+  
+.btn_plus {
+  border: 1px solid #91d0cd;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 3px;
+  background-size: 20px auto;
+  margin-bottom: 10px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); }
 
 #container {
   position: relative;
@@ -663,7 +667,7 @@ button.sort_on {
 
 .work_list .info {
   float: left;
-  width: 100%;
+  width:calc(100% - 60px);
   max-width: 300px;
   padding: 5px 0 0 15px; }
 
@@ -701,7 +705,7 @@ a.tag:hover {
 
 .work_list .info2 {
   position: relative;
-  width: 100%;
+  width:calc(100% - 75px);
   padding: 10px 0 0 0;
   margin: 0px 0 0 75px; }
 
@@ -713,7 +717,9 @@ a.tag:hover {
   display: inline-block;
   *display: inline;
   color: #8a8a8a;
-  font-size: 10pt; }
+  font-size: 10pt; 
+  
+}
 
 .work_list .info2 li:first-child {
   background: url("http://ndesign.co.kr/sharework/img/icon_cal.png") no-repeat left center;
@@ -925,7 +931,7 @@ span.icon-blue {
 
 #menu ul li {
   float: left;
-  width: 25%;
+  width: 20%;
   height: 55px; }
 
 #menu ul li:first-child {
@@ -942,12 +948,19 @@ span.icon-blue {
 background-size:30px auto;margin-top:-30px;}
 */
 #menu ul li:nth-child(3) {
-  background: url("http://ndesign.co.kr/sharework/img/icon_menu_list.png") no-repeat center center;
-  background-size: 30px auto; }
+  background: url("/img/icon_menu_list.png") no-repeat center center;
+  background-size: 30px auto;
+}
 
 #menu ul li:nth-child(4) {
-  background: url("http://ndesign.co.kr/sharework/img/icon_menu_mypage.png") no-repeat center center;
-  background-size: 30px auto; }
+  background: url("/img/icon_menu_mypage.png") no-repeat center center;
+  background-size: 30px auto;
+}
+
+#menu ul li:nth-child(5) {background:url('/img/icon_menu_alram.png') no-repeat center center;
+background-size:30px auto;
+}
+
 
 #menu ul li:first-child.on {
   background: url("http://ndesign.co.kr/sharework/img/icon_menu_home_on.png") no-repeat center center;

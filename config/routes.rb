@@ -9,12 +9,14 @@ Rails.application.routes.draw do
   get 'bussiness/show_job'
   get 'bussiness/show_applicant'
   get 'bussiness/_selection'
+  get 'bussiness/info_applicant'
   post 'bussiness/insertTag'
   post 'bussiness/createJob'
   post 'bussiness/change'
   post 'bussiness/create'
   post 'bussiness/hiredApplication'
   post 'bussiness/add_bussiness_fav'
+  post 'bussiness/add_alba_fav'
   get 'mypage/notice_list'
   get 'mypage/terms'
   post 'login/choose/:id' => "login#choose"
@@ -34,6 +36,7 @@ Rails.application.routes.draw do
   post 'active/createFavorites'
   post 'active/selectTag'
   post 'active/appriedCancel'
+  post 'active/deleteFavorites'
   get 'users/sessions/localnew'
   get 'devise/sessions/register'
   

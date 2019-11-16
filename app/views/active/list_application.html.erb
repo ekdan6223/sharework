@@ -19,7 +19,10 @@
   }
   
   $(function() {
-    $('.danger').on('click', function(){
+    $('#btn-cancel').on('click', function(event){
+      if(event.stopPropagation) event.stopPropagation(); //MOZILLA
+		  else event.cancelBubble = true; //IE
+ 
       var id = $(this).data('id');
       var name = $(this).data('name');
       
@@ -30,8 +33,10 @@
           }).fail(function(){
             alert('error');
           }).done(function(){
-            window.location.reload();
-            createToast($(this).attr('class'));
+            $("#div-reload").load(window.location.href + " #div-reload");
+            $("#tab-reload").load(window.location.href + " #tab-reload");
+            
+            eventToast('success', '지원이 취소되었습니다.');
           });
       }else{   //취소
           return;
@@ -67,7 +72,7 @@
        
 
       <ul class="tabs">
-          <li class="active" rel="tab1">지원중 <div><%= @application.length %></div></li>
+          <li class="active" rel="tab1">지원중 <div id="tab-reload"><%= @application.length %></div></li>
           <li rel="tab2">마감 <div><%= @application_end.length %></div></li>
 
       </ul>
@@ -75,7 +80,7 @@
    
       
       <div id="container" class="tab_container">
-
+          <div id="div-reload">
           <!-- #tab1 : 지원중 -->
           <div id="tab1" class="tab_content">
             
@@ -85,7 +90,7 @@
                   
                     <li class="li-progressList" data-id=<%= a.job_id %>> 
                         <section>
-                            <a href="#" class="icon_fav"><i class="far fa-star"></i></a>
+                            <!--<a href="#" class="icon_fav"><i class="far fa-star"></i></a>-->
                             <div class="img"><img src="https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg"></div>
                             <div class="info">
                                 <div class="title"><%= a.bs_name %> <span><%= a.address %></span><span class="loc">250m</span></div>
@@ -103,7 +108,7 @@
                             <li>시급 <%= a.pay %>원 <span class="icon-blue">당일지급</span></li>
                             </ul>
                             <% if a.status == 'appried' %>
-                              <span class="danger btn_apply" data-id=<%= a.id %> data-name=<%= a.bs_name %>>지원취소<i class="fas fa-chevron-right"></i></span>
+                              <span class="btn_apply" id="btn-cancel" data-id=<%= a.id %> data-name=<%= a.bs_name %>>지원취소<i class="fas fa-chevron-right"></i></span>
                               
                               <% elsif a.status == 'hired' %>
                                 <span class="btn_apply" data-id=<%= a.id %>>진행중<i class="fas fa-chevron-right"></i></span>
@@ -118,7 +123,7 @@
 
           </div>
 
-          
+          </div>
 
           <div id="tab2" class="tab_content">
             <ul class="work_list">
@@ -126,7 +131,7 @@
                   
                     <li class="li-deadlineList" data-id=<%= a.job_id %>> 
                         <section>
-                            <a href="#" class="icon_fav"><i class="far fa-star"></i></a>
+                            <!--<a href="#" class="icon_fav"><i class="far fa-star"></i></a>-->
                             <div class="img"><img src="https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg"></div>
                             <div class="info">
                                 <div class="title"><%= a.bs_name %> <span><%= a.address %></span><span class="loc">250m</span></div>

@@ -1,6 +1,4 @@
 @charset "utf-8";
-@import url('/css/notosanskr.css');
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
 
 html {overflow-y:scroll}
@@ -34,7 +32,7 @@ img {max-width:100%;}
 
 div, ul, li {display:inline-block;*display:inline;}
 
-.white {color:#fff !important;}
+.white {color:#fff;}
 
 .mg-top-20 {margin-top:20px;}
 .mg-top-30 {margin-top:30px;}
@@ -82,7 +80,7 @@ button {border-radius:0;-webkit-appearance:none}
 input[type=submit] {-webkit-appearance:none;}
 
 .frm_underline {border:0;border-bottom:1px solid #fff;background:transparent;
-    width:100%;height:50px;line-height:50px;margin-bottom:8px;color:#fff !important;} 
+    width:100%;height:50px;line-height:50px;margin-bottom:8px;} 
 
 .btn_default {background:#a9d8d5;color:#fff;border:0;}
 .btn_default:hover {background:#80bbb7;}
@@ -135,18 +133,19 @@ display:inline-block;*display:inline;}
 .form_mg_30 {margin:30px auto;}
 
 .form_wrap h2 {margin:20px 0;}
-
 .form_wrap input::placeholder {color: #8a8a8a;}
   
-.field {position:relative;width:100%;display:inline-block;*display:inline;}
-.field span {position:absolute;left:0;top:0;line-height:50px;width:50px;height:50px;text-align:center;font-size:13pt;}
+.field {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
 
-.frm_default {position:relative;border:1px solid #ddd;color:#888;padding-left:10px;width:100%;height:50px;line-height:50px;margin-bottom:8px;}
 
-.form_wrap.gray .frm_default {border:1px solid #ddd;color:#888 !important;padding-left:10px;}
-input::placeholder {color: #888;}
+.frm_default {position:relative;float:left;border:1px solid #ddd;color:#888;padding-left:10px;
+width:100%;height:50px;line-height:50px;margin-bottom:8px;z-index:9;}
+
+.frm_default::placeholder {color: #888;}
   
-.frm_fa {padding-left:50px !important;}
+
+.frm_fa {padding-left:50px;}
+
 .rememberme {margin:5px 0 10px 0;color:#8a8a8a;font-size:11pt;text-align:left;}
 
 label.title {position:relative;width:100%;float:left;text-align:left;font-weight:500;color:#444;margin:10px 0 5px 0;}
@@ -245,7 +244,8 @@ button.sort_on {background:#97d3d4;color:#fff;border:1px solid #97d3d4}
 
 .work_list .img {position:relative;float:left;background:#ddd;width:60px;height:60px;border-radius:50%;overflow:hidden;}
 .work_list .img img {position:absolute;left:0;top:0;min-height:100%;width:auto !important;}
-.work_list .info {float:left;width:100%;max-width:300px;padding:5px 0 0 15px;}
+
+.work_list .info {float:left;width:calc(100% - 60px);max-width:300px;padding:5px 0 0 15px;}
 .work_list .info .title {font-size:13pt;font-weight:500;width:100%;margin-bottom:2px;}
 .work_list .info .title span {margin-left:8px;font-weight:400;font-size:10pt;color:#8a8a8a}
 
@@ -255,8 +255,9 @@ button.sort_on {background:#97d3d4;color:#fff;border:1px solid #97d3d4}
 a.tag {color:#40ada7;padding:0 3px;}    
 a.tag:hover {background:#e9f7ff;border-radius:3px;}    
 
-.work_list .info2 {position:relative;width:100%;padding:10px 0 0 0;margin:0px 0 0 75px;}
-.work_list .info2 li {padding:0 0 0 25px;margin:0;width:100%;list-style:none;display:inline-block;*display:inline;color:#8a8a8a;font-size:10pt;}
+.work_list .info2 {position:relative;width:calc(100% - 75px);padding:10px 0 0 0;margin:0 0 0 75px;}
+.work_list .info2 li {padding:0 0 0 25px;margin:0;width:100%;
+list-style:none;display:inline-block;*display:inline;color:#8a8a8a;font-size:10pt;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 .work_list .info2 li:first-child {background:url('http://ndesign.co.kr/sharework/img/icon_cal.png') no-repeat left center;background-size:15px auto;}
 .work_list .info2 li:nth-child(2) {background:url('http://ndesign.co.kr/sharework/img/icon_time.png') no-repeat left center;background-size:15px auto;}
 .work_list .info2 li:nth-child(3) {background:url('http://ndesign.co.kr/sharework/img/icon_pay.png') no-repeat left center;background-size:15px auto;}
@@ -319,12 +320,9 @@ font-weight:500;padding:10px 20px 10px 30px;border-radius:50px;}
 #menu {position:fixed;background:#f5f5f5;width:100%;height:70px;text-align:center;border-top:1px solid #ddd;left: 0;bottom: 0;}
 #menu ul {position:relative;width:100%;max-width:500px;margin:0 auto;padding:0;}
 
-#menu ul li {float:left;width:25%;height:55px;}
+#menu ul li {float:left;width:20%;height:55px;}
 #menu ul li:first-child {background:url('http://ndesign.co.kr/sharework/img/icon_menu_home.png') no-repeat center center;background-size:30px auto;}
 #menu ul li:nth-child(2) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_fav.png') no-repeat center center;background-size:30px auto;}
-
-
-
 
 /*
 #menu ul li:nth-child(3) {}
@@ -332,21 +330,17 @@ font-weight:500;padding:10px 20px 10px 30px;border-radius:50px;}
 background-size:30px auto;margin-top:-30px;}
 */
 
-#menu ul li:nth-child(3) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_list.png') no-repeat center center;background-size:30px auto;}
-#menu ul li:nth-child(4) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_mypage.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(3) {background:url('/img/icon_menu_list.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(4) {background:url('/img/icon_menu_mypage.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(5) {background:url('/img/icon_menu_alram.png') no-repeat center center;background-size:30px auto;}
 
 #menu ul li:first-child.on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_home_on.png') no-repeat center center;background-size:30px auto;}
-
 #menu ul li:nth-child(2).on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_fav_on.png') no-repeat center center;background-size:30px auto;}
-
 #menu ul li:nth-child(3).on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_list_on.png') no-repeat center center;background-size:30px auto;}
 #menu ul li:nth-child(4).on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_mypage_on.png') no-repeat center center;background-size:30px auto;}
 
 
-
 /*내역페이지*/
-
-
 #status {position:relative;float:left;width:100%;margin:0;padding:20px;}
 #status li {float:left;width:50%;text-align:right;font-size:13pt;font-weight:500;padding:15px;margin:0;color:#333;}
 #status li span {color:#83d7d3;font-size:11pt;clear:both;}

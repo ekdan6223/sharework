@@ -7,6 +7,7 @@
           var f = document.writeForm;
           f.submit();
           $("#div-application").load(window.location.href + " #div-application");
+          eventToast('success', '채택하였습니다.');
       }else{   //취소
           return;
       }
@@ -24,9 +25,20 @@
           return;
       }
     });
+    
+    $('#applicant-info').on('click', function () {
+      var id = $(this).data('id');
+      var bussiness_id = $(this).data('bussiness_id');
+      location.href = "/bussiness/info_applicant?id=" + id + "&bussiness_id=" + bussiness_id;
+    });
   });
 </script>
 
+<style>
+  #applicant-info {
+    cursor: pointer;
+  }
+</style>
 
 <div id="wrap" class="st_info">
   
@@ -94,7 +106,7 @@
                 </div>
                 
                 
-                <div class="pull-left col-md-6">
+                <div class="pull-left col-md-6" id="applicant-info" data-id="<%= application.user_id %>"  data-bussiness_id="<%= params[:bussiness_id] %>">
                   <b><%= application.name %></b><span class="certi">인증회원</span><br />
                   <%= application.address1 %> <br />
                   <%= application.phone %> <br />

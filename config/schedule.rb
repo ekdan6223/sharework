@@ -5,7 +5,7 @@ def local(time)
 end
 
 every 10.minutes do
-    rake "jobs:auto_runner_job", :environment => "development"
+    rake "jobs:auto_runner_job", :environment => "production"
 end
 
 ## 스케쥴링 Job 테스트 : 1분 간격으로 Bussiness 모델에 새로운 데이터를 생성합니다.

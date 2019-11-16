@@ -140,6 +140,24 @@
       var id = $(this).data('id');
       location.href = "/active/create_application?id=" + id;
     });
+    
+    $(document).on('click', "#bussiness-fav", function () {
+      var id = $(this).data('id');
+      
+      var con = confirm('즐겨찾기에서 삭제하시겠습니까?');
+      if(con == false) {
+        return;
+      } else {
+        $.post('/bussiness/add_bussiness_fav', {bussiness_id: id}, 
+        function(returnedData){
+            $("#fav-list").load(window.location.href + " #fav-list");
+            eventToast('success', '즐겨찾기에서 삭제되었습니다.');
+        }).fail(function(){
+          alert('삭제실패');
+        });
+      }
+      
+    });
   });
 </script>
 
@@ -170,10 +188,10 @@ font-weight:500;padding:7px 15px;width:110px;border-radius:50px;font-size:10.5pt
 
 <div id="wrap" class="st_info" style="background:#f7f7f7;">
   <div id="top_title2">업체 즐겨찾기</div>
-  
+  <div id="fav-list">
   <% @albafav.each do |albafav| %>
     <div class="st_top st_fav">
-        <div class="icon_fav"><i class="fas fa-star"></i></div>
+        <div class="icon_fav"><i class="fas fa-star" id="bussiness-fav" data-id=<%= albafav.bussiness_id %>></i></div>
         <div class="img"><img src="http://cdnimage.ebn.co.kr/news/201710/news_1509339728_915222_main1.jpg"></div>
         <div class="info">
             <div class="title">
@@ -202,7 +220,7 @@ font-weight:500;padding:7px 15px;width:110px;border-radius:50px;font-size:10.5pt
         
     </div>
   <% end %>
-       
+  </div>     
     
      
      

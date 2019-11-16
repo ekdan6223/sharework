@@ -1,6 +1,20 @@
 class ActiveController < ApplicationController
   skip_before_action :verify_authenticity_token
   
+  def index
+    @job = Job.where(status: 'open')
+    for i in 0..@job.length - 1
+      @job[i].pay = insert_comma(@job[i].pay.to_i)
+      @job[i].time_start = @job[i].time_start[10..15]
+      @job[i].time_end = @job[i].time_end[10..15]
+    end
+    @favorites = Favorite.where(user_id: current_user.id)
+    
+    @job = @job.to_json
+    
+    @tag = Tag.select('lib_tags.*, tags.*').joins(:lib_tag).to_json
+  end
+  
   def index1
     @job = Job.where(status: 'open')
     for i in 0..@job.length - 1
@@ -45,7 +59,7 @@ class ActiveController < ApplicationController
     @bussiness = Bussiness.find(@job.bussiness_id)
     @tag = Tag.select('lib_tags.*, tags.*').joins(:lib_tag).where(job_id: params[:id])
     
-    @albafav = Albafav.find_by(user_id: current_user.id, bussiness_id: @bussiness_id)
+    @albafav = Albafav.find_by(user_id: current_user.id, bussiness_id: @bussiness.id)
   end
   
   def createApplication
@@ -59,7 +73,6 @@ class ActiveController < ApplicationController
     @job.personnel_cnt = @job.personnel_cnt + 1
     @job.save
     
-    redirect_to '/active/create_application?id=' + params[:job_id]
   end
   
   def create_favorites
@@ -81,15 +94,21 @@ class ActiveController < ApplicationController
     #@job = Job.select('alvafavs.*, jobs.*').joins(:job).where(user_id: current_user.id, jobs: {bussiness_id: alvafavs.bussiness_id})
   end
   
-  #def createFavorites
-  #  @favorites = Favorite.new
-  #  @favorites.y = params[:y]
-  #  @favorites.x = params[:x]
-  #  @favorites.user_id = current_user.id
-  #  @favorites.save
+  def createFavorites
+    @favorites = Favorite.new
+    @favorites.y = params[:y]
+    @favorites.x = params[:x]
+    @favorites.fav_name = params[:fav_name]
+    @favorites.user_id = current_user.id
+    @favorites.save
     
   #  redirect_to '/active/index1'
-  #end
+  end
+  
+  def deleteFavorites
+    fav = Favorite.find(params[:id])
+    fav.destroy
+  end
   
   def list_application
     #지원중, 진행중

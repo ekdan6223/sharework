@@ -62,17 +62,17 @@
         </button>
       </div>
       <div class="modal-body">
-                <div class="form_wrap" style="max-width:380px;">
+                <div class="form_wrap" style="max-width:400px;">
                 
                 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                   <div class="field">
-                    <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "frm_default frm_fa", placeholder: "아이디" %>
+                   <div class="label_icon"><i class="fas fa-envelope"></i></div>
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "frm_default frm_fa", style: "color:#666 !important",  placeholder: "아이디" %>
                   </div>
                 
                   <div class="field">
-                    <span><i class="fa fa-lock" aria-hidden="true" style="font-size:15pt;"></i></span>
-                    <%= f.password_field :password, autocomplete: "current-password", class: "frm_default frm_fa", placeholder: "패스워드" %>
+                    <div class="label_icon"><i class="fas fa-lock" aria-hidden="true" style="font-size:15pt;"></i></div>
+                    <%= f.password_field :password, autocomplete: "current-password", class: "frm_default frm_fa", style: "color:#666 !important", placeholder: "패스워드" %>
                   </div>
                 
                   <% if devise_mapping.rememberable? %>

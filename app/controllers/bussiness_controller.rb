@@ -23,7 +23,8 @@ class BussinessController < ApplicationController
       @tag = Tag.select('lib_tags.*, tags.*').joins(:lib_tag).where(bussiness_id: @bussiness.id)
       puts "----------------------------------------------------"
       
-      
+      @businessfav = Businessfav.select('users.*, businessfavs.*').joins(:user).where(bussiness_id: @bussiness.id)
+      puts @businessfav
     end
   end
   
@@ -153,8 +154,7 @@ class BussinessController < ApplicationController
   
   def add_bussiness_fav
     fav = Albafav.find_by(bussiness_id: params[:bussiness_id], user_id: current_user.id)
-    puts '---------------'
-    puts fav
+    
     if fav == nil
       @albafavs = Albafav.new
       @albafavs.user_id = current_user.id
@@ -166,7 +166,49 @@ class BussinessController < ApplicationController
     end
   end
   
+  def add_alba_fav
+    fav = Businessfav.find_by(user_id: params[:user_id], bussiness_id: params[:bussiness_id])
+    
+    if fav == nil
+      @businessfav = Businessfav.new
+      @businessfav.user_id = params[:user_id]
+      @businessfav.bussiness_id = params[:bussiness_id]
+      @businessfav.save
+    elsif fav != nil
+      @businessfav = Businessfav.find_by(user_id: params[:user_id], bussiness_id: params[:bussiness_id])
+      @businessfav.destroy
+    end
+  end
+  
   def _selection
+  end
+  
+  def info_applicant
+    @user = User.find(params[:id])
+    
+    @businessfav = Businessfav.find_by(user_id: params[:id], bussiness_id: params[:bussiness_id])
+    
+    @list = []
+    application = Application.select('users.*, applications.*').joins(:user).where(user_id: params[:id], status: 'completed')
+    for i in 0..application.length - 1
+      tag = Tag.select('jobs.*, tags.*').joins(:job).where(job_id: application[i].job_id)
+      for j in 0..tag.length - 1
+        lib_tag = Tag.select('lib_tags.*, tags.*').joins(:lib_tag).find(tag[j].id)
+        @list.push(lib_tag)
+      end
+    end
+    
+    #puts @list.inject(Hash.new(0)) { |lib_tag_id, e| lib_tag_id[e] += 1 ;lib_tag_id}
+    counted = Hash.new(0)
+    @list.each { |h| counted[h["lib_tag_id"]] += 1 }
+    @counted = Hash[counted.map {|k,v| [k,v.to_s] }]
+    
+    @tag = []
+    @counted.each do |counted|
+      tag = LibTag.find(counted[0])
+      tag.sectors = counted[1]
+      @tag.push(tag)
+    end
   end
 
   def insert_comma(string)

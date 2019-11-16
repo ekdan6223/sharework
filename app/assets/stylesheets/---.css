@@ -312,8 +312,7 @@ input[type=submit] {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  margin-bottom: 8px;
-  color: #fff !important; }
+  margin-bottom: 8px;}
 
 .form_wrap.gray .frm_default {
   border: 1px solid #ddd;
@@ -548,7 +547,7 @@ textarea.frm_default {
 
 .work_list .info {
   float: left;
-  width: 100%;
+  width:calc(100% - 60px);
   max-width: 300px;
   padding: 5px 0 0 15px; }
 
@@ -830,13 +829,14 @@ span.icon-blue {
 */
 
 
-#menu ul li:nth-child(4) {
+#menu ul li:nth-child(3) {
   background: url("/img/icon_menu_list.png") no-repeat center center;
   background-size: 30px auto; }
 
-#menu ul li:nth-child(5) {
+#menu ul li:nth-child(4) {
   background: url("/img/icon_menu_mypage.png") no-repeat center center;
   background-size: 30px auto; }
+  
 
 #menu ul li:first-child.on {
   background: url("/img/icon_menu_home_on.png") no-repeat center center;

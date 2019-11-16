@@ -2,8 +2,8 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        width:500px !important;
-        height:500px !important;
+        width:100%;
+        height:500px;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -12,7 +12,7 @@
         padding: 0;
       }
       
-      .map_wrap {position:relative;width:500px;height:500px;}
+      .map_wrap {position:relative;width:100%;height:500px;}
       #menu_wrap {
         z-index: 10000;
         position:absolute;
@@ -27,38 +27,41 @@
         display: inline-block;
         cursor: pointer;
       }
-    </style>
+      
 
-    
+      }
+    </style>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <div id="wrap"><!--wrap-->
 
 
         <div id="maparea">
           <div id="sch">
-                <input type="text" onkeyup="enterkey();"  id="address" placeholder="어느지역에서 일하고 싶으세요?">
+                <input type="text" id="address" placeholder="어느지역에서 일하고 싶으세요?">
                 <span class="favorites" id="currentLocation"></span> 
             </div>
 
             <div class="map_wrap">
               
               
-            <div id="map"style="width:50%; height:70%;"></div>
+            <div id="map"></div>
       
-            <!--즐찾버튼-->
-            <div id="fav">
-                <% if @favorites != nil %>
-                  <% @count = 0 %>
-                  <% while @count < @favorites.length %>
-                    <span class="favorites btn_fav2" id="favorites_<%= @count %>"></span> <br />
-                    <input type="hidden" id="favorites_y_<%= @count %>" value=<%= @favorites[@count].y %>>
-                    <input type="hidden" id="favorites_x_<%= @count %>" value=<%= @favorites[@count].x %>>
-                    <% @count = @count + 1 %>
+              <!--즐찾버튼-->
+              <div id="fav">
+                <div id="div-fav"> 
+                  <span class="favorites btn_plus" id="favorites_plus" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+</span> <br />
+                  <% if @favorites != nil %>
+                    <% @count = 0 %>
+                    <% while @count < @favorites.length %>
+                      <span class="favorites btn_fav2 favorites_address" data-favy="<%= @favorites[@count].y %>" data-favx=<%= @favorites[@count].x %>></span> <br />
+                      <% @count = @count + 1 %>
+                    <% end %>
                   <% end %>
-                <% end %>
+                </div>
+              </div>
+              <!--즐찾버튼-->
             </div>
-            <!--즐찾버튼-->
-    </div>
-
         </div>
 
         <div id="container" class="recm" style="background:#fff;">
@@ -73,28 +76,59 @@
             <ul class="work_list"></ul>
 
         </div>
+        
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">즐겨찾기 추가</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input type="text" id="favorites_name" placeholder="즐겨찾기 이름을 입력해주세요.">
+            <button type="button" class="btn btn-primary" id="btn-save">저장</button></br>
+            현재 지도에서 보여지는 위치가 추가됩니다.
+            
+          </div>
+        </form>
+      </div>
+      <div class="modal-body">
+        <div id="fav-list">
+        <% if @favorites != nil %>
+          <% @count = 0 %>
+          <% while @count < @favorites.length %>
+            <span><i class="far fa-star"></i></span>
+            <span><%= @favorites[@count].fav_name %></span> 
+            <button type="button" id="btn-delete" data-id=<%= @favorites[@count].id %>>삭제</button><br />
+            <% @count = @count + 1 %>
+          <% end %>
+        <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" data-dismiss="modal" id="btn-cancel">취소</button>
+        
+      </div>
+    </div>
+  </div>
+
 
 
     </div><!--wrap-->
     
- 
-
-
     <script>
-      $(function () {
-        $('#menu_active').addClass('on');
-        $('#menu_favorites').removeClass('on');
-        $('#menu_application').removeClass('on');
-        $('#menu_mypage').removeClass('on');
-      });
-      
       var map, infoWindow;
       var markers, marker;
       var pos = {};
       var fav_y, fav_x;
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
+          center: {lat: pos.lat, lng: pos.lng},
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           panControl: true,
@@ -106,6 +140,72 @@
         });
         infoWindow = new google.maps.InfoWindow;
 
+        geolocation(); //현재 위치 가져오기(비동기)
+      }
+      
+      var job = <%= raw @job %>
+      var id = [];
+      var bs_address = [];
+      var bs_name = [];
+      var time_start = [];
+      var time_end = [];
+      var pay = [];
+      var distance = [];
+      var realdistance = [];
+      var locations = [];
+      var y = [];
+      var x = [];
+      var date = [];
+      var address = [];
+      var data = [];
+      var day_payment = [];
+      
+      function setData(pos_y, pos_x) {
+         for(var i = 0; i < job.length; i++) {
+          id.push(job[i].id);
+          bs_address.push(job[i].bs_address);
+          bs_name.push(job[i].bs_name);
+          time_start.push(job[i].time_start);
+          time_end.push(job[i].time_end);
+          pay.push(job[i].pay);
+          locations.push({lat: Number(job[i].y), lng: Number(job[i].x)});
+          y.push(job[i].y);
+          x.push(job[i].x);
+          date.push(job[i].date);
+          address.push(job[i].address);
+          day_payment.push(job[i].day_payment);
+          
+          newRowData = {
+            id: job[i].id,
+            bs_address: job[i].bs_address,
+            bs_name: job[i].bs_name,
+            time_start: job[i].time_start,
+            time_end: job[i].time_end,
+            pay: job[i].pay,
+            y: job[i].y,
+            x: job[i].x,
+            distance: calcDistance(pos_y, pos_x, job[i].y, job[i].x),
+            realdistance: realDistance(pos_y, pos_x, job[i].y, job[i].x),
+            date: job[i].date,
+            address: job[i].addyress,
+            removeComma: job[i].pay.replace(/,/gi,""),
+            day_payment: job[i].day_payment,
+            created_at: job[i].created_at,
+            bussiness_id: job[i].bussiness_id
+          }
+          
+          data.push(newRowData);
+        }
+        
+        data.sort(function(a, b) { // 오름차순
+          return a["realdistance"] - b["realdistance"];
+        });
+        
+        gridMarker();
+        gridList(data);
+      }
+      
+      function geolocation() {
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -113,9 +213,7 @@
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-            
-            setData(pos['lat'], pos['lng']);
-
+            setData(pos.lat, pos.lng); //초기 전체 데이터 넣기
             //infoWindow.setPosition(pos);
             //infoWindow.setContent('Location found.');
             //infoWindow.open(map);
@@ -129,20 +227,35 @@
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
-
+      }
+      
+      function gridMarker() {
+        var clusterStyles = [
+          {
+              url: '/img/num_bg.png',
+              width: 50,
+              height: 50,
+              fontFamily:"Arial",
+              textSize:20,
+              textColor:"white"
+          },
+        ];
+        
+        var clusterOptions = {
+            imagePath: '/img/num_bg.png',
+            styles: clusterStyles
+        };
+        
         markers = locations.map(function(location, i) {
           var marker = new google.maps.Marker({
-            position: location,
-            //label: labels[i % labels.length]
+            position: location
           });
           
           google.maps.event.addListener(marker, 'click', function() {
-            var data = { job_id: marker.id };
-            //var tag = selectTagObj(data);
-            
             marker.distance = calcDistance(pos.lat, pos.lng, marker.y, marker.x);
             marker.realdistance = realDistance(pos.lat, pos.lng, marker.y, marker.x);
             gridListObj(marker);
+            moveToLocation(marker.y, marker.x);
           });
           
           return marker;
@@ -150,236 +263,25 @@
         
         addMarkerData(); //마커 추가정보 입력
         
-        // Add a marker clusterer to manage the markers.
-        var markerCluster = new MarkerClusterer(map, markers, {
-          //maxZoom: 15,
-          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        });
+        var markerCluster = new MarkerClusterer(map, markers, clusterOptions);
         
         google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
-            var data = cluster.getMarkers();
-            var length = data.length;
+            var data1 = cluster.getMarkers();
+            var length = data1.length;
             for(var i = 0; i < length; i++) {
-              data[i].distance = calcDistance(pos.lat, pos.lng, data[i].y, data[i].x);
-              data[i].realdistance = realDistance(pos.lat, pos.lng, data[i].y, data[i].x);
+              data1[i].distance = calcDistance(pos.lat, pos.lng, data1[i].y, data1[i].x);
+              data1[i].realdistance = realDistance(pos.lat, pos.lng, data1[i].y, data1[i].x);
             }
-            gridList(data);
+            gridList(data1);
         });
       }
       
-      function selectTagObj(data) {
-        var tagList;
-        $.post('/active/selectTag', data, 
-        function(returnedData){
-             console.log(returnedData);
-        }).fail(function(){
-              console.log("error");
-        }).done(function(result) {
-          alert(result);
-        });
-        
-        return tagList;
+      function moveToLocation(lat, lng) {
+        var center = new google.maps.LatLng(lat, lng);
+        map.panTo(center);
       }
       
-      function initGeoMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          panControl: true,
-          zoomControl: false,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          overviewMapControl: false
-        });
-        infoWindow = new google.maps.InfoWindow;
-
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-
-            //infoWindow.setPosition(pos);
-            //infoWindow.setContent('Location found.');
-            //infoWindow.open(map);
-            var image = '/img/mylocation.png';
-            var marker = new google.maps.Marker({position: pos, map: map, icon: image});
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-
-        markers = locations.map(function(location, i) {
-          var marker = new google.maps.Marker({
-            position: location,
-            //label: labels[i % labels.length]
-          });
-          
-          google.maps.event.addListener(marker, 'click', function() {
-            var data = { job_id: marker.id };
-            //var tag = selectTagObj(data);
-            
-            marker.distance = calcDistance(pos.lat, pos.lng, marker.y, marker.x);
-            marker.realdistance = realDistance(pos.lat, pos.lng, marker.y, marker.x);
-            gridListObj(marker);
-          });
-          
-          return marker;
-        });
-        
-        addMarkerData(); //마커 추가정보 입력
-        
-        // Add a marker clusterer to manage the markers.
-        //var markerCluster = new MarkerClusterer(map, markers, {
-          //maxZoom: 15,
-        //  imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        //});
-        
-                
-    var clusterStyles = [
-        {
-            url: '/img/num_bg.png',
-            width: 50,
-            height: 50,
-            fontFamily:"Arial",
-            textSize:20,
-            textColor:"white"
-        },
-    ];
-        
-    var clusterOptions = {
-        imagePath: '/img/num_bg.png',
-        styles: clusterStyles
-    };
-    
-    
-    
-      var markerCluster = new MarkerClusterer(map, markers, clusterOptions);
-       
-
-
-        
-        google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
-            var data = cluster.getMarkers();
-            var length = data.length;
-            for(var i = 0; i < length; i++) {
-              data[i].distance = calcDistance(pos.lat, pos.lng, data[i].y, data[i].x);
-              data[i].realdistance = realDistance(pos.lat, pos.lng, data[i].y, data[i].x);
-            }
-            gridList(data);
-        });
-      }
-      
-      function favoritesMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          panControl: true,
-          zoomControl: false,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          overviewMapControl: false
-        });
-        infoWindow = new google.maps.InfoWindow;
-        
-        map.setCenter({lat: Number(fav_y), lng: Number(fav_x)});
-
-        markers = locations.map(function(location, i) {
-          var marker = new google.maps.Marker({
-            position: location,
-            //label: labels[i % labels.length]
-          });
-          
-          google.maps.event.addListener(marker, 'click', function() {
-            marker.distance = calcDistance(pos.lat, pos.lng, marker.y, marker.x);
-            marker.realdistance = realDistance(pos.lat, pos.lng, marker.y, marker.x);
-            gridListObj(marker);
-          });
-          
-          return marker;
-        });
-        
-        addMarkerData(); //마커 추가정보 입력
-        
-      // Add a marker clusterer to manage the markers.
-        //var markerCluster = new MarkerClusterer(map, markers, {
-          //maxZoom: 15,
-          //imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        //});
-        
-        
-    var clusterStyles = [
-        {
-            height: 53,
-            url: '/img/num_bg.png',
-            width: 53,
-        },
-    ];
-        
-       
-    var clusterOptions = {
-        imagePath: '/img/num_bg.png',
-        styles: clusterStyles
-    };
-    
-    
-    
-      var markerCluster = new MarkerClusterer(map, markers, clusterOptions);
-       
-
-
-        
-        google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
-            var data = cluster.getMarkers();
-            var length = data.length;
-            for(var i = 0; i < length; i++) {
-              data[i].distance = calcDistance(pos.lat, pos.lng, data[i].y, data[i].x);
-              data[i].realdistance = realDistance(pos.lat, pos.lng, data[i].y, data[i].x);
-            }
-            gridList(data);
-        });
-      }
-      
-      function selectTag() {
-        alert(1);
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
-      
-      function addMarkerData() {
-        var length = markers.length;
-        for(var i = 0; i < length; i++) {
-            markers[i].id = id[i];
-            markers[i].bs_address = bs_address[i];
-            markers[i].bs_name = bs_name[i];
-            markers[i].time_start = time_start[i];
-            markers[i].time_end = time_end[i];
-            markers[i].pay = pay[i];
-            markers[i].y = y[i];
-            markers[i].x = x[i];
-            markers[i].date = date[i];
-            markers[i].address = address[i];
-        }
-        
-        
-      }
-      
+      //거리 변환
       function calcDistance(lat1, lon1, lat2, lon2){
           
           var EARTH_R, Rad, radLat1, radLat2, radDist; 
@@ -403,6 +305,7 @@
           return  rtn;
       }
       
+      //실제 거리
       function realDistance(lat1, lon1, lat2, lon2){
           var EARTH_R, Rad, radLat1, radLat2, radDist; 
           var distance, ret;
@@ -418,18 +321,35 @@
           return  ret;
       }
       
+      function addMarkerData() {
+        var length = markers.length;
+        for(var i = 0; i < length; i++) {
+            markers[i].id = id[i];
+            markers[i].bs_address = bs_address[i];
+            markers[i].bs_name = bs_name[i];
+            markers[i].time_start = time_start[i];
+            markers[i].time_end = time_end[i];
+            markers[i].pay = pay[i];
+            markers[i].y = y[i];
+            markers[i].x = x[i];
+            markers[i].date = date[i];
+            markers[i].address = address[i];
+            markers[i].day_payment = day_payment[i];
+        }
+      }
+      
       function gridList(data) {
         var tag = <%= raw @tag %>;
         
           $(".work_list").empty();
           
           for(var i = 0; i < data.length; i++) {
-              var li$ = $('<li>');
+              var li$ = $('<li>').addClass('li-job').data('y', data[i].y).data('x', data[i].x);
               var div$ = $('<div>');
               $('<section>').append(
-                $('<a>').addClass('icon_fav').append(
-                  $('<i>').addClass('far fa-star').data('bussiness_id', data[i].bussiness_id)
-                ),
+                //$('<a>').addClass('icon_fav').append(
+                //  $('<i>').addClass('far fa-star').data('bussiness_id', data[i].bussiness_id)
+                //),
                 $('<div>').addClass('img').append(
                   $('<img>').attr('src', 'https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg')
                 ),
@@ -460,7 +380,6 @@
                 $('<span>').addClass('icon-blue').text('당일지급').appendTo(liPay$);
               }
               
-              
               $('<span>').addClass('btn_apply').text('바로지원').data('id', data[i].id).append(
                 $('<i>').addClass('fas fa-chevron-right')  
               ).appendTo(li$);
@@ -474,12 +393,12 @@
         
           $(".work_list").empty();
           
-          var li$ = $('<li>');
+          var li$ = $('<li>').addClass('li-job').data('y', data.y).data('x', data.x);
           var div$ = $('<div>');
           $('<section>').append(
-            $('<a>').addClass('icon_fav').append(
-              $('<i>').addClass('far fa-star')
-            ),
+            //$('<a>').addClass('icon_fav').append(
+            //  $('<i>').addClass('far fa-star')
+            //),
             $('<div>').addClass('img').append(
               $('<img>').attr('src', 'https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg')
             ),
@@ -502,7 +421,6 @@
             $('<li>').text(data.date),
             $('<li>').text(data.time_start + '시 ~ ' + data.time_end + '시'),
             liPay$.text('시급 ' + data.pay + '원').append(
-              $('<span>').addClass('icon-blue').text('당일지급')
             )
           ).appendTo(li$);
           
@@ -517,174 +435,168 @@
           $('.work_list').append(li$);
       }
       
-      var job = <%= raw @job %>
-      var id = [];
-      var bs_address = [];
-      var bs_name = [];
-      var time_start = [];
-      var time_end = [];
-      var pay = [];
-      var distance = [];
-      var realdistance = [];
-      var locations = [];
-      var y = [];
-      var x = [];
-      var date = [];
-      var address = [];
-      
-      var data = [];
-      
-      function dataList(data) {
-        
-      }
-      
-      function setData(pos_y, pos_x) {
-         for(var i = 0; i < job.length; i++) {
-          id.push(job[i].id);
-          bs_address.push(job[i].bs_address);
-          bs_name.push(job[i].bs_name);
-          time_start.push(job[i].time_start);
-          time_end.push(job[i].time_end);
-          pay.push(job[i].pay);
-          locations.push({lat: Number(job[i].y), lng: Number(job[i].x)});
-          y.push(job[i].y);
-          x.push(job[i].x);
-          date.push(job[i].date);
-          address.push(job[i].address);
-          
-          newRowData = {
-            id: job[i].id,
-            bs_address: job[i].bs_address,
-            bs_name: job[i].bs_name,
-            time_start: job[i].time_start,
-            time_end: job[i].time_end,
-            pay: job[i].pay,
-            y: job[i].y,
-            x: job[i].x,
-            distance: calcDistance(pos_y, pos_x, job[i].y, job[i].x),
-            realdistance: realDistance(pos_y, pos_x, job[i].y, job[i].x),
-            date: job[i].date,
-            address: job[i].addyress,
-            removeComma: job[i].pay.replace(/,/gi,""),
-            day_payment: job[i].day_payment,
-            created_at: job[i].created_at,
-            bussiness_id: job[i].bussiness_id
-          }
-          data.push(newRowData);
-        }
-        
-        data.sort(function(a, b) { // 오름차순
-          return a["realdistance"] - b["realdistance"];
+      $(function() {
+        //현재 위치로
+        $('#currentLocation').on('click', function() {
+          //geolocation();
+          moveToLocation(pos.lat, pos.lng);
         });
         
-        gridList(data);
-        initGeoMap();
-      }
-      
-      $(function(){
-       
+        //당일지급
+        $('#day_payment').on('click', function () {
+          if($(this).hasClass("sort_on")) {
+            var dayArr = data;
+            $('#day_payment').removeClass('sort_on');
+          } else {
+            var dayArr = data.filter(function(item){    
+              return item.day_payment === "T";
+            }); 
+            $('#day_payment').addClass('sort_on');
+          }
+          
+          gridList(dayArr);
+        });
         
+        //가격순
+        $('#price').on('click', function() {
+          data.sort(function(b, a) { 
+            return a["removeComma"] - b["removeComma"];
+          });
+          
+          if($('#day_payment').hasClass("sort_on")) {
+            var dataArr = data.filter(function(item){    
+              return item.day_payment === "T";
+            }); 
+          } else {
+            var dataArr = data;
+          }
+        
+          $('.btn_sort').removeClass('sort_on');
+          $('#price').addClass('sort_on');
+          gridList(dataArr);
+        });
+        
+        //거리순
+        $('#street_order').on('click', function () {
+          data.sort(function(a, b) { // 오름차순
+            return a["realdistance"] - b["realdistance"];
+          });
+          
+          if($('#day_payment').hasClass("sort_on")) {
+            var dataArr = data.filter(function(item){    
+              return item.day_payment === "T";
+            }); 
+          } else {
+            var dataArr = data;
+          }
+          
+          $('.btn_sort').removeClass('sort_on');
+          $('#street_order').addClass('sort_on');
+          gridList(dataArr);
+        });
+        
+        //최신순
+        $('#newest').on('click', function () {
+          data.sort(function(b, a) { 
+            return a["created_at"].replace(/[^0-9]/g,"") - b["created_at"].replace(/[^0-9]/g,"");
+          });
+          
+          if($('#day_payment').hasClass("sort_on")) {
+            var dataArr = data.filter(function(item){    
+              return item.day_payment === "T";
+            }); 
+          } else {
+            var dataArr = data;
+          }
+        
+          $('.btn_sort').removeClass('sort_on');
+          $('#newest').addClass('sort_on');
+          gridList(dataArr);
+        });
+        
+        //바로지원 click event
         $(document).on('click','.btn_apply', function(){
           var id = $(this).data('id');
           location.href = "/active/create_application?id=" + id;
         });
         
-        $('#geoList').on('click', function(){
-          location.href="/active/geo_list?y=" + pos.lat + "&x=" + pos.lng;
-        });
-        
-        $('#currentLocation').on('click', function() {
-          initGeoMap();
-        });
-        
-        $('#favorites_0').on('click', function() {
-          fav_y = $('#favorites_y_0').val();
-          fav_x = $('#favorites_x_0').val();
-          favoritesMap();
-        });
-        
-        $('#favorites_1').on('click', function() {
-          fav_y = $('#favorites_y_1').val();
-          fav_x = $('#favorites_x_1').val();
-          favoritesMap();
-        });
-        
-        $('#createFavorites').on('click', function() {
-          location.href = "/active/create_favorites";
-        })
-        
-        $('#Applicant').on('click', function() {
-          location.href = "/active/list_application";
-        });
-        
-        $('#price').on('click', function() {
-          data.sort(function(b, a) { 
-            return a["removeComma"] - b["removeComma"];
-          });
-        
-          $('.sort_on').removeClass('sort_on');
-          $('#price').addClass('sort_on');
-          gridList(data);
-        });
-        
-        $('#day_payment').on('click', function () {
-          var dayArr = data.filter(function(item){    
-            return item.day_payment === "T";
-          }); 
+        //job click event
+        $(document).on('click', '.li-job', function () {
+          var y = $(this).data('y');
+          var x = $(this).data('x');
           
-          $('.sort_on').removeClass('sort_on');
-          $('#day_payment').addClass('sort_on');
-          gridList(dayArr);
+          moveToLocation(y, x);
         });
         
-        $('#street_order').on('click', function () {
-          gridList(data);
-          $('.sort_on').removeClass('sort_on');
-          $('#street_order').addClass('sort_on');
+        //즐겨찾기 추가 click
+        $('#favorites_plus').on('click', function () {
+          $("#myModal").modal();
         });
         
-        $('#newest').on('click', function () {
-          data.sort(function(a, b) { 
-            return a["created_at"] - b["created_at"];
-          });
-        
-          $('.sort_on').removeClass('sort_on');
-          $('#newest').addClass('sort_on');
-          gridList(data);
-        });
-        
-        $(document).on('click', '.fa-star', function () {
-          var id = $(this).data('bussiness_id');
+        //즐겨찾기 저장
+        $('#btn-save').on('click', function () {
+          var center = map.getCenter(); 
+          var fav_name = $('#favorites_name').val();
           
-        })
-      });
-      
-      function enterkey() {
-          if (window.event.keyCode == 13) {
+          $.post('/active/createFavorites', { y: center.lat(), x: center.lng(), fav_name: fav_name}, 
+            function(returnedData){
+              $("#div-fav").load(window.location.href + " #div-fav");
+              $("#fav-list").load(window.location.href + " #fav-list");
+              eventToast('success', '즐겨찾기가 추가되었습니다.');
+            }).fail(function(){
+              alert('저장실패');
+              console.log("error");
+            });
+        });
+        
+        //즐겨찾기 삭제
+        $(document).on('click', '#btn-delete', function () {
+          var id = $(this).data('id');
+          
+          $.post('/active/deleteFavorites', { id: id}, 
+            function(returnedData){
+              $("#div-fav").load(window.location.href + " #div-fav");
+              $("#fav-list").load(window.location.href + " #fav-list");
+              eventToast('success', '즐겨찾기가 삭제되었습니다.');
+            }).fail(function(){
+              alert('삭제실패');
+              console.log("error");
+            });
+        });
+        
+        $(document).on('click', '.favorites_address', function() {
+          fav_y = $(this).data('favy');
+          fav_x = $(this).data('favx');
+          
+          moveToLocation(fav_y, fav_x);
+        });
+        
+        $("#address").keypress(function (e) {
+          if(e.which == 13) {
             var address = $('#address').val();
             var geocoder;
-            geocoder = new goolgle.maps.Geocoder();
+            geocoder = new google.maps.Geocoder();
             geocoder.geocode({'address': address}, function(results, status) {
               if(status == google.maps.GeocoderStatus.OK) {
                 var address_lat = results[0].geometry.location.lat();
                 var address_lng = results[0].geometry.location.lng();
+                
+                moveToLocation(address_lat, address_lng);
               } else {
                 var address_lat = '';
                 var address_lng = '';
               }
             });
-            
-            alert('주소 : ' + address + '\n\n위도 : ' + address_lat + '\n\n경도 : ' + address_lng);
           }
-        }
-      $(document).ready(function() {
+        }); 
         
-        
-        
+        //처음 시작 거리순
+        $('#street_order').click();
       });
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7hFvqWN9sgQerWvWN7UTkRYI2yfKtlnk&callback=initMap&libraries=geometry,places&sensor=false">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7hFvqWN9sgQerWvWN7UTkRYI2yfKtlnk&callback=initMap&libraries=geometry,places&sensor=false" >
     </script> 
+    
