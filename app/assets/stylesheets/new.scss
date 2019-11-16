@@ -1,8 +1,12 @@
 @charset "UTF-8";
 
+input {
+   -webkit-appearance: none;
+   -webkit-border-radius: 0;
+}
 
 .field div.label_icon {position:absolute;left:0;top:0;line-height:50px;width:50px;
 height:50px;text-align:center;font-size:13pt;}
 
-.agree_text {position:relative;width:100%;display:inline-block;*display:inline;font-size:10pt;color:#666;}
+.agree_text {position:relative;width:100%;display:inline-block;*display:inline;font-size:9pt;color:#666;}
 .agree_text a {color:#000;text-decoration:underline;}

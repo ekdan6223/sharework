@@ -319,8 +319,7 @@ a.btn_bd_gray {
   margin: 0 auto;
   background: #fff;
   text-align: left;
-  padding-bottom: 50px;
-  min-height: 800px; }
+  padding-bottom: 50px;}
 
 .info {
   font-size: 10pt; }
@@ -330,10 +329,10 @@ a.btn_bd_gray {
   background: #85d5d5 !important;
   text-align: center !important;
   color: #fff;
-  padding: 150px 0; }
+  padding: 130px 0 0 0; min-height:800px;}
 
-.index .logo {
-  max-width: 280px;
+.index .logo{
+  max-width: 250px;
   margin: 0 auto 10px auto; }
 
 .btn_login {
@@ -396,8 +395,9 @@ input::placeholder {
 .rememberme {
   margin: 5px 0 10px 0;
   color: #8a8a8a;
-  font-size: 11pt;
-  text-align: left; }
+  font-size: 10pt;
+  text-align: left;
+  font-weight:normal;}
 
 label.title {
   position: relative;
@@ -452,10 +452,11 @@ textarea.frm_default {
 
 #sns_login_wrap {
   position: relative;
-  width: 60%;
+  width:85%;max-width:350px;
   margin: 0 auto;
   display: inline-block;
-  *display: inline; }
+  *display: inline;
+  font-size:10.5pt;}
 
 .sns_login {
   position: relative;
@@ -487,12 +488,12 @@ textarea.frm_default {
   color: #888; }
 
 #login_area {
-  position: absolute;
+  position: fixed;
   width: 100%;
   display: inline-block;
   display: inline;
   left: 0;
-  bottom: 50px; }
+  bottom: 50px;font-size:10.5pt; }
 
 #login_area a {
   border: 1px solid #fff;
@@ -948,16 +949,16 @@ span.icon-blue {
 background-size:30px auto;margin-top:-30px;}
 */
 #menu ul li:nth-child(3) {
-  background: url("/img/icon_menu_list.png") no-repeat center center;
+  background: url("http://ndesign.co.kr/sharework/img/icon_menu_list.png") no-repeat center center;
   background-size: 30px auto;
 }
 
 #menu ul li:nth-child(4) {
-  background: url("/img/icon_menu_mypage.png") no-repeat center center;
+  background: url("http://ndesign.co.kr/sharework/img/icon_menu_mypage.png") no-repeat center center;
   background-size: 30px auto;
 }
 
-#menu ul li:nth-child(5) {background:url('/img/icon_menu_alram.png') no-repeat center center;
+#menu ul li:nth-child(5) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_alram.png') no-repeat center center;
 background-size:30px auto;
 }
 

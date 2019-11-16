@@ -1,6 +1,6 @@
 
 
-<div id="wrap" class="index intro" style="margin:0 auto;float:none;">
+<div id="wrap" class="index intro" style="display:none;margin:0 auto;float:none;">
       
          <img src="http://ndesign.co.kr/sharework/img/logo.png" class="logo wow slideInUp" data-wow-duration="2s" data-wow-delay="0.5s"><br>
          <div class="">실시간 알바 매칭 가이드</div>
@@ -27,7 +27,7 @@
          
 </div>
 
-<div id="wrap" class="index original" style="margin:0 auto;float:none;display:none;">
+<div id="wrap" class="index original" style="margin:0 auto;float:none;">
       
           <img src="http://ndesign.co.kr/sharework/img/logo.png"  class="logo wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s"><br>
           <div class="wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s">실시간 알바 매칭 가이드</div>
@@ -99,14 +99,20 @@
   </div>
 </div>
 
-
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="http://ndesign.co.kr/sharework/js/wow.min.js"></script>
 
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="http://ndesign.co.kr/sharework/js/wow.min.js"></script>
 <script>
 $(function(){
   new WOW().init(); 
 });
-</script>
+</script>-->
           
+<script>
+$(document).ready(function(){
+    $("#wrap").css("height", $(window).height());
+});
+</script>
+
+
