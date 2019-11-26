@@ -112,6 +112,8 @@ div,ul,li,p,span {display:inline-block;*display:inline;}
   .intro .member {max-width:80%;}
   .intro .btn_youtube,
   .intro .btn_kakao {position:relative;float:left;width:50px;height:50px;}
+  .intro .btn_youtube {background:url('http://ndesign.co.kr/sharework/icon_youtube.png') center center no-repeat;background-size:30px auto;}
+  .intro .btn_kakao {background:url('http://ndesign.co.kr/sharework/icon_kakao.png') center center no-repeat;background-size:30px auto;}
   .intro .btn_area {display:inline-block;*display:inline;margin:0 auto;}
   
 /*//////////intro end //////*/  
@@ -217,6 +219,11 @@ font-size:10.5pt;}
 
 .sns_login {position:relative;float:left;width:100%;height:50px;line-height:50px;color:#fff;
 border:0;border-radius:3px;padding-left:30px ;margin-bottom:10px;color:#fff;}
+.sns_login.kakao {background:url('http://ndesign.co.kr/sharework/img/icon_kakao.png') #f6df4b no-repeat 40px center;
+    color:#371f1f !important;background-size:25px auto;}
+.sns_login.naver {background:url('http://ndesign.co.kr/sharework/img/icon_naver.png') #1ec900 no-repeat 40px center;
+    background-size:20px auto;color:#fff !important;}
+.sns_login.email {background:url('http://ndesign.co.kr/sharework/img/icon_email.png') #fff no-repeat 40px center;
     background-size:20px auto;border:1px solid #ddd;color:#888; }
 
 #login_area {position:fixed;width:100%;display:inline-block;display:inline;left:0;bottom:50px;}
@@ -245,6 +252,7 @@ border:0;border-radius:3px;padding-left:30px ;margin-bottom:10px;color:#fff;}
   line-height: 45px;
   border-radius: 3px;
   padding-left: 50px;
+  background: url("http://ndesign.co.kr/sharework/img/icon_search.png") #fff no-repeat 15px center;
   background-size: 20px auto; }
 
 #sch span {
@@ -255,6 +263,7 @@ border:0;border-radius:3px;padding-left:30px ;margin-bottom:10px;color:#fff;}
   height: 45px;
   line-height: 45px;
   border-radius: 3px;
+  background: url("http://ndesign.co.kr/sharework/img/icon_mylocation.png") #fff no-repeat center center;
   background-size: 20px auto; }
 
 
@@ -267,6 +276,7 @@ float:right;width:90px;font-weight:500;border-radius:3px;}
 #fav {position:absolute;top:65px;right:10px;width:45px}
 
 .btn_fav2 {border:1px solid #91d0cd;width:45px;height:45px;line-height:45px;border-radius:3px;
+background:url('http://ndesign.co.kr/sharework/img/icon_fav_star.png') #fff no-repeat center center;background-size:20px auto;margin-bottom:10px;
 box-shadow:0px 3px 5px rgba(0,0,0,0.3);}
 
 .btn_plus {
@@ -383,6 +393,9 @@ a.tag:hover {background:#e9f7ff;border-radius:3px;}
 .work_list .info2 {position:relative;width:calc(100% - 75px);padding:10px 0 0 0;margin:0 0 0 5px;}
 .work_list .info2 li {padding:0 0 0 25px;margin:0;width:100%;
 list-style:none;display:inline-block;*display:inline;color:#8a8a8a;font-size:10pt;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+.work_list .info2 li:first-child {background:url('http://ndesign.co.kr/sharework/img/icon_cal.png') no-repeat left center;background-size:15px auto;}
+.work_list .info2 li:nth-child(2) {background:url('http://ndesign.co.kr/sharework/img/icon_time.png') no-repeat left center;background-size:15px auto;}
+.work_list .info2 li:nth-child(3) {background:url('http://ndesign.co.kr/sharework/img/icon_pay.png') no-repeat left center;background-size:15px auto;}
 
 .work_list .fa-star {z-index:999;}
 
@@ -413,6 +426,7 @@ font-weight:500;padding:10px 20px 10px 30px;border-radius:50px;}
 .st_info .st_top .title span {margin-left:8px;font-weight:400;font-size:10pt;color:#8a8a8a}
 
 .st_info .st_top .title span.loc:before {position:absolute;content:"|";left:0;top:-1px;}
+.st_info .st_top .title span.loc {position:relative;background:url('http://ndesign.co.kr/sharework/img/icon_location.png') 12px center no-repeat;background-size:10px auto;padding-left:27px;}
 
 .st_info .st_top .icon_fav {top:15px;right:15px;}
 
@@ -442,11 +456,24 @@ line-height:55px;padding:0;font-size:13pt;z-index:99;}
 #menu ul {position:relative;width:100%;max-width:500px;margin:0 auto;padding:0;}
 
 #menu ul li {float:left;width:20%;height:55px;}
+#menu ul li:first-child {background:url('http://ndesign.co.kr/sharework/img/icon_menu_home.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(2) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_fav.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(3) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_list.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(4) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_alram.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(5) {background:url('http://ndesign.co.kr/sharework/img/icon_menu_mypage.png') no-repeat center center;background-size:30px auto;}
+
+#menu ul li:first-child.on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_home_on.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(2).on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_fav_on.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(3).on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_list_on.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(4).on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_alram_on.png') no-repeat center center;background-size:30px auto;}
+#menu ul li:nth-child(5).on {background:url('http://ndesign.co.kr/sharework/img/icon_menu_mypage_on.png') no-repeat center center;background-size:30px auto;}
 
 /*내역페이지*/
 #status {position:relative;float:left;width:100%;margin:0;padding:20px;}
 #status li {float:left;width:50%;text-align:right;font-size:13pt;font-weight:500;padding:15px;margin:0;color:#333;}
 #status li span {color:#83d7d3;font-size:11pt;clear:both;}
+#status li:first-child {background:url('http://ndesign.co.kr/sharework/img/status_icon1.png') no-repeat 10px center;background-size:35px auto;border-right:1px solid #ddd;}
+#status li:nth-child(2) {background:url('http://ndesign.co.kr/sharework/img/status_icon2.png') no-repeat 10px center;background-size:35px auto;}
 
 
 ul.tabs {position:relative;width: 100%;color:#8a8a8a; margin: 0;padding: 0;}
@@ -481,6 +508,7 @@ ul.tabs li.active div {background:#82d7d2;}
 .user_info li {width:100%;padding:0;margin:0;}
 .sm_notice {color:#d2eeee;font-size:10pt;}
 
+.btn_modify {border:0;position:absolute;right:20px;top:40px;width:30px;height:30px;background:url('http://ndesign.co.kr/sharework/img/icon_setting.png') no-repeat center center; background-size:30px auto;}
 
 #profile .btn_area {position:absolute;top:0;right:0;}
 #profile .btn_area span {border:1px solid #fff;border-radius:10px;}
@@ -493,6 +521,7 @@ ul.tabs li.active div {background:#82d7d2;}
 #list_menu > ul {position:relative;float:left;width:100%;padding:0;margin:0;}
 #list_menu > ul > li {position:relative;float:left;width:100% !important;height:55px;line-height:55px;color:#333;border-bottom:1px solid #ddd;padding:0 30px;font-weight:500;}
 #list_menu > ul > li:nth-child(2) {height:auto;}    
+#list_menu > ul > li.arrow {background:url('http://ndesign.co.kr/sharework/img/icon_arrow.png') no-repeat 95% center;background-size:10px auto;}
 
 #submenu {position:relative;float:left;width:100%;max-width:100%;padding:0;margin:15px 0;line-height:30px;}
 #submenu li {position:relative;width:100%;list-style:none;margin:0;padding:0;line-height:35px;color:#666;font-weight:400;}
