@@ -71,6 +71,6 @@ gem 'oauth2'
 gem 'whenever'
 gem 'omniauth-oauth2'
 gem 'rails_admin'
-gem 'whenever', require: false
+gem 'whenever', require: 'whereever'
 gem 'fog', '~> 1.41.0'
 gem 'carrierwave'
