@@ -1,5 +1,5 @@
 require "tzinfo"
-require "whereever"
+
 def local(time)
     TZInfo::Timezone.get('Asia/Seoul').local_to_utc(Time.parse(time))
 end
