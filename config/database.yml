@@ -21,5 +21,9 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  database: sharework_env_production
+  username: admin
+  password: sharework
+  host: sharework-database.citnohrdypvp.ap-northeast-2.rds.amazonaws.com
+  port: 3306
