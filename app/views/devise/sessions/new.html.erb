@@ -28,15 +28,25 @@
 
 <div id="wrap" class="index original" style="margin:0 auto;float:none;">
       
-          <img src="http://ndesign.co.kr/sharework/img/logo.png"  class="logo wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s"><br>
-          <div class="wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s">실시간 알바 매칭 가이드 ver1.1.7</div>
+          <img src="/img/logo.png"  class="logo wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s"><br>
+          <div class="wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s">실시간 알바 매칭 가이드 ver1.1.6</div>
           
           <br style="clear:both;">
 
-          <div id="sns_login_wrap" style="margin-top:120px;" class="wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="1s">
-          <%= render "devise/shared/links" %><br/>
-          <%= link_to "회원가입", "/users/sign_up", class: "sns_login email" %>
+          <div id="sns_login_wrap" class="wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="1s">
+            
+              <div id="sns_login_inner">
+              <%= render "devise/shared/links" %><br/>
+              <%= link_to "회원가입", "/users/sign_up", class: "sns_login email" %>
+              </div>
           </div>
+          
+          
+<script>
+//$(document).ready(function(){
+//$("#wrap").css("height", $(window).innerHeight());
+//});
+</script>
           
           <div id="login_area">
           이미 회원이신가요?
@@ -107,12 +117,7 @@ $(function(){
   new WOW().init(); 
 });
 </script>-->
-          
-<script>
-$(document).ready(function(){
-    $("#wrap").css("height", $(window).height());
-});
-</script>
+
 
 
 

@@ -9,7 +9,7 @@ html {overflow-y:scroll}
 body {margin:0;padding:0;font-size:11pt;font-family:'Noto Sans KR', sans-serif;width:100%;height:100%;font-weight:400;background:#f9f9f9;text-align:center;}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0;font-family:'Noto Sans KR', sans-serif;}
 
-h1,h2,h3,h4,h5 {font-weight:500;}
+h1,h2,h3,h4,h5 {font-weight:600;}
 h1 {font-size:25pt;}
 h2 {font-size:20pt;}
 h3 {font-size:18pt;}
@@ -18,7 +18,7 @@ h5 {font-size:12pt;}
 h6 {font-size:10pt;} 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 
-
+input {font-size:11pt;}
 
 legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, button, select, img {vertical-align:middle}
@@ -106,14 +106,13 @@ a.btn_bd_gray {color:#8a8a8a;}
 #top_title2 i {margin-right:10px;}
 #top_title2 i:hover {cursor:pointer;}
 
-#wrap {position:relative;width:100%;max-width:500px;margin:0 auto;background:#fff;text-align:left;padding-bottom:50px;border:2px solid red;}
+#wrap {position:relative;width:100%;max-width:500px;margin:0 auto;background:#fff;text-align:left;}
 .info {font-size:10pt;}
 
 
 /*로그인*/
-.index {background:#85d5d5 !important;text-align:center !important;color:#fff;padding:130px 0 0 0;min-height:900px;}
+.index {background:#85d5d5 !important;text-align:center !important;color:#fff;padding:130px 0 0 0;height:100%;}
 .index .logo {max-width:250px;margin:0 auto 10px auto;}
-
 
 
 .btn_login {position:relative !important;background:#97d3d4;border:0;color:#fff;line-height:50px;width:100% !important;}
@@ -129,8 +128,8 @@ input::placeholder {color: #8a8a8a;}
 
 .field {position:relative;float:left;width:100%;}
 
-.frm_default {border:1px solid #ddd;color:#888;padding-left:10px;
-width:100%;height:50px;line-height:50px;margin-bottom:8px;}
+.frm_default {border:1px solid #ddd;color:#888;padding-left:10px;width:100%;height:50px;line-height:50px;margin-bottom:8px;
+  font-size:11pt;}
 
 
 /* text input with icon */
@@ -165,11 +164,11 @@ textarea.frm_default {height:100px;}
 .agree li:nth-child(2),
 .agree li:nth-child(3) {padding-left:20px;margin-top:5px;}
 
-#sns_login_wrap {position:relative;width:85%;max-width:350px;margin:0 auto;display:inline-block;*display:inline;
-font-size:10.5pt;}
-
+#sns_login_wrap {position:absolute;width:100%;margin:0 auto;
+font-size:10.5pt;height:180px;left:0;top:50%;margin-top:-90px;text-align:center;}
+#sns_login_inner {position:relative;width:75%;}
 .sns_login {position:relative;float:left;width:100%;height:50px;line-height:50px;color:#fff;
-border:0;border-radius:3px;padding-left:30px ;margin-bottom:10px;color:#fff;}
+border:0;border-radius:3px;padding-left:30px;margin:0 auto 10px auto;color:#fff;}
 .sns_login.kakao {background:url('/img/icon_kakao.png') #f6df4b no-repeat 40px center;
     color:#371f1f !important;background-size:25px auto;}
 .sns_login.naver {background:url('/img/icon_naver.png') #1ec900 no-repeat 40px center;
@@ -183,7 +182,7 @@ border:0;border-radius:3px;padding-left:30px ;margin-bottom:10px;color:#fff;}
 #maparea {position:relative;width:100%;}
       #map {
         width:100%;
-        height:500px;
+        height:300px;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -192,7 +191,7 @@ border:0;border-radius:3px;padding-left:30px ;margin-bottom:10px;color:#fff;}
         padding: 0;
       }
       
-      .map_wrap {position:relative;width:100%;height:500px;}
+      .map_wrap {position:relative;width:100%;disply:inline-block;*display:inline;}
       
       #menu_wrap {
         z-index: 1000;
@@ -280,21 +279,23 @@ box-shadow:0px 3px 5px rgba(0,0,0,0.3);}
 
 
 /*정렬버튼 - 거리순, 가격순, 최신순*/
-button.btn_sort {border:1px solid #ddd;color:#8a8a8a;padding:5px 6px;font-size:11pt;margin:0;float:left;background:#fff;} 
-#street_order {border-right:0;} 
-#newest {border-left-color:#ededed;border-right-color:#ededed;} 
+.sort {position:relative;width:100%;margin:10px 0 0 0}
+button.btn_sort {border:1px solid #dfdfdf;color:#888;padding:7px 10px;font-weight: 400;margin:0;float:left;background:#fff;} 
+#street_order {border-right:0;border-top-left-radius:2px;border-bottom-left-radius:2px;} 
+#newest {border-left:0;border-right:0;} 
 #price {border-left:0;} 
-button.sort_on {background:#97d3d4;color:#fff;border:1px solid #97d3d4}
+button.sort_on {color:#97d3d4;font-weight:bold;}
 
 /*정렬버튼 - 당일지급*/
-.btn_sort2 {border:0;color:#8a8a8a;padding:5px 6px;font-size:11pt;margin:0;float:left;margin-right:5px;background:#fff} 
+.btn_sort2 {border-radius:2px;border:1px solid #dfdfdf;color:#888;padding:7px 10px;font-weight: 400;margin:0;
+float:left;background:#fff;margin-left:5px;} 
 .sort2_on {background:#1a50b0;border:1px solid #1a50b0;color:#fff;}
        
       
 .work_list {
   position: relative;
   padding: 0;
-  margin: 15px 0;
+  margin: 10px 0 0 0;
   display: inline-block;
   *display: inline; }
 
