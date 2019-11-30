@@ -19,7 +19,18 @@
     <script src="https://kit.fontawesome.com/9f48ba518c.js"></script>
      
     <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-    <!--<link rel="stylesheet" href="http://ndesign.co.kr/sharework/css/animate.css"/>-->
+    
+        
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    
+    <!-- version 1.1.6 // 2019-11-30 -->
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+   
+    
     
     <!-- ax5ui -->
     <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5core/master/dist/ax5core.min.js"></script>
@@ -35,16 +46,6 @@
     <!-- ax5ui-dialog -->
     <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-dialog/master/dist/ax5dialog.css" />
     <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-dialog/master/dist/ax5dialog.min.js"></script>
-    
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-   
-    <!--<link rel="stylesheet" href="//rawgit.com/Soldier-B/jquery.toast/master/jquery.toast/jquery.toast.min.css" />-->
-    <!--<script src="//rawgit.com/Soldier-B/jquery.toast/master/jquery.toast/jquery.toast.min.js"></script>-->
-
 
   </head>
 
@@ -56,11 +57,11 @@
       <% if current_user.usertype =='0' %> <!--알바일때-->
           <div id="menu">
               <ul>
-                  <li id="menu_active"></li>
-                  <li id="menu_favorites"></li>
-                  <li id="menu_application"></li>
-                  <li id="menu_alram"></li>
-                  <li id="menu_mypage"></li>
+                  <li id="menu_active">1</li>
+                  <li id="menu_favorites">2</li>
+                  <li id="menu_application">3</li>
+                  <li id="menu_alram">4</li>
+                  <li id="menu_mypage">5</li>
               </ul>
         </div>
       <% end %>
