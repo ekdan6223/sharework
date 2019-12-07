@@ -106,7 +106,7 @@ a.btn_bd_gray {color:#8a8a8a;}
 #top_title2 i {margin-right:10px;}
 #top_title2 i:hover {cursor:pointer;}
 
-#wrap {position:relative;width:100%;max-width:500px;margin:0 auto;background:#fff;text-align:left;}
+#wrap {position:relative;width:100%;max-width:500px;margin:0 auto;background:#fff;text-align:left;overflow:hidden;}
 .info {font-size:10pt;}
 
 
@@ -182,7 +182,7 @@ border:0;border-radius:3px;padding-left:30px;margin:0 auto 10px auto;color:#fff;
 #maparea {position:relative;width:100%;}
       #map {
         width:100%;
-        height:300px;
+        height:350px;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -272,8 +272,13 @@ box-shadow:0px 3px 5px rgba(0,0,0,0.3);}
 
 
 /*이 알바는 어때요*/
-.recm {}
+.recm {background:#fff;padding:25px !important;box-shadow:0px 0px 5px rgba(0,0,0,0.3)}
 .recm h5 {display:inline-block;*display:inline;float:left;padding:0;margin:0;}
+.recm h5.btn_mainlist {float:right !important;}
+
+
+.abs {position:absolute !important;width:100%;height:600px;left:0;bottom:0;border-radius:15px;}
+
 .recm .fa-sort-amount-down {float:right;font-size:12pt;color:#b0b0b0;margin-top:8px;}
 
 
@@ -287,11 +292,11 @@ button.btn_sort {border:1px solid #dfdfdf;color:#888;padding:7px 10px;font-weigh
 button.sort_on {color:#97d3d4;font-weight:bold;}
 
 /*정렬버튼 - 당일지급*/
-.btn_sort2 {border-radius:2px;border:1px solid #dfdfdf;color:#888;padding:7px 10px;font-weight: 400;margin:0;
-float:left;background:#fff;margin-left:5px;} 
+.btn_sort2 {border-radius:2px;border:1px solid #dfdfdf;color:#888;padding:7px 10px;font-weight: 400;margin:0;float:left;background:#fff;margin-left:5px;} 
 .sort2_on {background:#1a50b0;border:1px solid #1a50b0;color:#fff;}
        
-      
+
+
 .work_list {
   position: relative;
   padding: 0;

@@ -1,7 +1,7 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <div id="wrap"><!--wrap-->
+    <div id="wrap" style="height:100%;"><!--wrap-->
 
         <div id="maparea">
           <div id="sch">
@@ -30,9 +30,11 @@
             </div>
         </div>
 
-        <div id="container" class="recm" style="background:#fff;">
+        <div id="container" class="recm abs">
 
-            <h5>이 알바는 어때요? ver1.1.6</h5>
+            <h5>이 알바는 어때요?</h5>
+            
+            <h5 class="btn_mainlist"><i class="fas fa-chevron-down"></i></h5>
             
             <div class="sort">
             <button id="street_order" class="btn_sort sort_on">거리순</button><button id="newest" class="btn_sort">최신순</button><button id="price" class="btn_sort">가격순</button>
@@ -337,7 +339,7 @@
               var liPay$ = $('<li>');
               $('<ul>').addClass('info2').append(
                 $('<li>').text(data[i].date),
-                $('<li>').text(data[i].time_start + '시 ~ ' + data[i].time_end + '시'),
+                $('<li>').text(data[i].time_start + ' ~ ' + data[i].time_end + ''),
                 liPay$.text('시급 ' + data[i].pay + '원').append(
                   
                 )
@@ -386,7 +388,7 @@
           var liPay$ = $('<li>');
           $('<ul>').addClass('info2').append(
             $('<li>').text(data.date),
-            $('<li>').text(data.time_start + '시 ~ ' + data.time_end + '시'),
+            $('<li>').text(data.time_start + ' ~ ' + data.time_end + ''),
             liPay$.text('시급 ' + data.pay + '원').append(
             )
           ).appendTo(li$);

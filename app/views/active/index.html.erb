@@ -71,6 +71,16 @@
             <button id="street_order" class="btn_sort sort_on">거리순</button><button id="newest" class="btn_sort">최신순</button><button id="price" class="btn_sort">가격순</button>
             </div>           
             
+            
+            
+            <ul class="work_list">
+              <li>
+                
+                
+              </li>
+            </ul>
+            
+            
             <ul class="work_list"></ul>
 
         </div>
@@ -449,7 +459,7 @@
               var liPay$ = $('<li>');
               $('<ul>').addClass('info2').append(
                 $('<li>').text(data[i].date),
-                $('<li>').text(data[i].time_start + '시 ~ ' + data[i].time_end + '시'),
+                $('<li>').text(data[i].time_start + ' ~ ' + data[i].time_end + ''),
                 liPay$.text('시급 ' + data[i].pay + '원').append(
                   
                 )
@@ -499,7 +509,7 @@
           var liPay$ = $('<li>');
           $('<ul>').addClass('info2').append(
             $('<li>').text(data.date),
-            $('<li>').text(data.time_start + '시 ~ ' + data.time_end + '시'),
+            $('<li>').text(data.time_start + ' ~ ' + data.time_end + ''),
             liPay$.text('시급 ' + data.pay + '원').append(
               $('<span>').addClass('icon-blue').text('당일지급')
             )

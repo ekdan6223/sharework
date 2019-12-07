@@ -25,5 +25,5 @@ production:
   database: sharework_env_production
   username: admin
   password: sharework
-  host: sharework-database.citnohrdypvp.ap-northeast-2.rds.amazonaws.com
+  host: localhost
   port: 3306
