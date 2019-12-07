@@ -445,7 +445,7 @@
                 div$.addClass('info').append(
                   $('<div>').addClass('title').text(data[i].bs_name + ' ').append(
                     $('<span>').text(data[i].address),
-                    $('<span>').addClass('loc').text(data[i].distance)
+                    $('<div>').addClass('loc').text(data[i].distance)
                   ),
                 )
               ).appendTo(li$);
@@ -495,7 +495,7 @@
             div$.addClass('info').append(
               $('<div>').addClass('title').text(data.bs_name + ' ').append(
                 $('<span>').text(data.address),
-                $('<span>').addClass('loc').text(data.distance)
+                $('<div>').addClass('loc').text(data.distance)
               ),
             )
           ).appendTo(li$);

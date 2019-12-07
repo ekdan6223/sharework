@@ -311,24 +311,22 @@
         var tag = <%= raw @tag %>;
         
           $(".work_list").empty();
-          
+          alert(data[i].x);
           for(var i = 0; i < data.length; i++) {
               var li$ = $('<li>').addClass('li-job').data('y', data[i].y).data('x', data[i].x);
               var div$ = $('<div>');
-              $('<section>').append(
                 //$('<a>').addClass('icon_fav').append(
                 //  $('<i>').addClass('far fa-star').data('bussiness_id', data[i].bussiness_id)
                 //),
                 $('<div>').addClass('img').append(
                   $('<img>').attr('src', 'https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg')
-                ),
+                ).appendTo(li$);
                 div$.addClass('info').append(
                   $('<div>').addClass('title').text(data[i].bs_name + ' ').append(
                     $('<span>').text(data[i].address),
-                    $('<span>').addClass('loc').text(data[i].distance)
+                    $('<div>').addClass('loc').text(data[i].distance)
                   ),
-                )
-              ).appendTo(li$);
+                ).appendTo(li$);
               
               for(var j = 0; j < tag.length; j++) {
                 if(Number(tag[j].job_id) == data[i].id) {
@@ -363,20 +361,18 @@
           
           var li$ = $('<li>').addClass('li-job').data('y', data.y).data('x', data.x);
           var div$ = $('<div>');
-          $('<section>').append(
             //$('<a>').addClass('icon_fav').append(
             //  $('<i>').addClass('far fa-star')
             //),
             $('<div>').addClass('img').append(
               $('<img>').attr('src', 'https://www.menupan.com/restaurant/restimg/000/zzmenuimg/h3024404_z.jpg')
-            ),
+            ).appendTo(li$);
             div$.addClass('info').append(
               $('<div>').addClass('title').text(data.bs_name + ' ').append(
                 $('<span>').text(data.address),
-                $('<span>').addClass('loc').text(data.distance)
+                $('<div>').addClass('loc').text(data.distance)
               ),
-            )
-          ).appendTo(li$);
+            ).appendTo(li$);
           
           for(var i = 0; i < tag.length; i++) {
             if(Number(tag[i].job_id) == data.id) {
@@ -387,7 +383,7 @@
           var liPay$ = $('<li>');
           $('<ul>').addClass('info2').append(
             $('<li>').text(data.date + ' ' + data.time_start + ' ~ ' + data.time_end + ''),
-            liPay$.text('시급 ' + data.pay + '원').append(
+            liPay$.text('시급 >' + data.pay + '원').append(
             )
           ).appendTo(li$);
           
