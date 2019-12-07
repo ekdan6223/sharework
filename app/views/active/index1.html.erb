@@ -338,8 +338,7 @@
               
               var liPay$ = $('<li>');
               $('<ul>').addClass('info2').append(
-                $('<li>').text(data[i].date),
-                $('<li>').text(data[i].time_start + ' ~ ' + data[i].time_end + ''),
+                $('<li>').text(data[i].date + ' ' + data[i].time_start + ' ~ ' + data[i].time_end + ''),
                 liPay$.text('시급 ' + data[i].pay + '원').append(
                   
                 )
@@ -387,8 +386,7 @@
           
           var liPay$ = $('<li>');
           $('<ul>').addClass('info2').append(
-            $('<li>').text(data.date),
-            $('<li>').text(data.time_start + ' ~ ' + data.time_end + ''),
+            $('<li>').text(data.date + ' ' + data.time_start + ' ~ ' + data.time_end + ''),
             liPay$.text('시급 ' + data.pay + '원').append(
             )
           ).appendTo(li$);

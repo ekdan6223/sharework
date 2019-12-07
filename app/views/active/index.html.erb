@@ -73,7 +73,7 @@
             
             
             
-            <ul class="work_list">
+            <ul class="work_list_new">
               <li>
                 
                 
@@ -460,7 +460,7 @@
               $('<ul>').addClass('info2').append(
                 $('<li>').text(data[i].date),
                 $('<li>').text(data[i].time_start + ' ~ ' + data[i].time_end + ''),
-                liPay$.text('시급 ' + data[i].pay + '원').append(
+                liPay$.text('시급 <b> ' + data[i].pay + '원</b>').append(
                   
                 )
               ).appendTo(li$);
@@ -510,7 +510,7 @@
           $('<ul>').addClass('info2').append(
             $('<li>').text(data.date),
             $('<li>').text(data.time_start + ' ~ ' + data.time_end + ''),
-            liPay$.text('시급 ' + data.pay + '원').append(
+            liPay$.text('시급 <b>' + data.pay + '원</b>').append(
               $('<span>').addClass('icon-blue').text('당일지급')
             )
           ).appendTo(li$);
