@@ -68,7 +68,7 @@ gem 'omniauth-naver','~>0.2.0'
 gem 'figaro'
 gem 'omniauth-kakao', '~> 0.2.0'
 gem 'oauth2'
-gem 'whenever'
+gem 'whenever', require: false
 gem 'omniauth-oauth2'
 gem 'rails_admin'
 gem 'fog', '~> 1.41.0'
