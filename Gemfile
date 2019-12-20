@@ -50,6 +50,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rails_db'
+  gem 'capistrano', '~> 3.7', '>= 3.7.1'
+  gem 'capistrano-rails', '~> 1.2'
+  gem 'capistrano-passenger', '~> 0.2.0'
+  # Add this if you're using rbenv
+  gem 'capistrano-rbenv', '~> 2.1'
 end
 
 group :test do
