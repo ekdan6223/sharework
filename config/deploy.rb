@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 # config valid only for current version of Capistrano
-lock '3.11.0'
+# lock '3.11.0'
 set :application, 'sharework'
 set :repo_url, 'git@github.com:ekdan6223/sharework.git'
 set :deploy_to, '/home/deploy/sharework'
-append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'config/database.yml', 'config/master.key', 'config/application.yml'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads'
 # Path of tests to be run, use array with empty string to run all tests
 set :tests, ['']
