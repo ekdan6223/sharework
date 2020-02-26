@@ -4,9 +4,9 @@
     <div id="wrap" style="height:100%;"><!--wrap-->
 
         <div id="maparea">
-          <div id="sch">
+          
+            <div id="sch">
                 <input type="text" id="address" placeholder="어느지역에서 일하고 싶으세요?">
-                <span class="favorites" id="currentLocation"></span> 
             </div>
 
             <div class="map_wrap">
@@ -14,17 +14,22 @@
             <div id="map"></div>
       
               <!--즐찾버튼-->
-              <div id="fav">
-                <div id="div-fav"> 
+              <div id="map_btn">
+                
+                <span class="favorites mylocation" id="currentLocation"></span> 
+                
                   <% if @favorites != nil %>
                     <% @count = 0 %>
                     <% while @count < @favorites.length %>
-                      <span class="favorites btn_fav2 favorites_address" data-favy="<%= @favorites[@count].y %>" data-favx=<%= @favorites[@count].x %>></span> <br />
+                      <span class="favorites btn_fav2 favorites_address" data-favy="<%= @favorites[@count].y %>" data-favx=<%= @favorites[@count].x %>></span>
+                      <br />
                       <% @count = @count + 1 %>
                     <% end %>
                   <% end %>
-                  <span class="favorites btn_plus" id="favorites_plus" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+</span> <br />
-                </div>
+                  <span class="favorites btn_plus" id="favorites_plus" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                  <i class="fas fa-plus"></i>
+                  </span>
+
               </div>
               <!--즐찾버튼-->
             </div>
@@ -46,8 +51,14 @@
 
         </div>
         
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+        
+        
+        
+        
+        
+        
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="text-align:center;">
+  <div class="modal-dialog modal-sm" role="document" style="margin:0 auto;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">즐겨찾기 추가</h5>
@@ -57,15 +68,20 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <input type="text" id="favorites_name" placeholder="즐겨찾기 이름을 입력해주세요.">
-            <button type="button" class="btn btn-primary" id="btn-save">저장</button></br>
-            현재 지도에서 보여지는 위치가 추가됩니다.
+          
+          <span class="font_sm gray">현재 지도에서 보여지는 위치가 추가됩니다. </span><br style="clear:both;">
+          
+          <div class="form-group" style="width:100%;margin-top:10px;" class="nomg">
             
+            <input type="text" id="favorites_name" class="frm_default" placeholder="즐겨찾기 이름을 입력해주세요." style="width:70%;float:left;">
+            <button type="button" class="btn_lg btn_lightgreen" id="btn-save" style="width:30%;float:left;">저장</button>
           </div>
+          
         </form>
+
       </div>
-      <div class="modal-body">
+      
+      
         <div id="fav-list">
         <% if @favorites != nil %>
           <% @count = 0 %>
@@ -77,7 +93,7 @@
           <% end %>
         <% end %>
         </div>
-      </div>
+        
       <div class="modal-footer">
         
         <button type="button" data-dismiss="modal" id="btn-cancel">취소</button>
@@ -88,7 +104,7 @@
 
 
 
-    </div><!--wrap-->
+</div><!--wrap-->
     
     <script>
       var map, infoWindow;

@@ -54,6 +54,13 @@ div,ul,li,p,span {display:inline-block;*display:inline;}
 .col-md-8 {float:left;width:66.6666%}
 .col-md-9 {float:left;width:75%}
 
+.nomg {margin:0;margin-bottom:0;}
+
+
+
+
+.font_sm {font-size:10pt;}
+.gray {color:#888;}
 
 /*//////////intro//////*/
   .intro {padding-top:100px;}
@@ -106,7 +113,15 @@ a.btn_bd_gray {color:#8a8a8a;}
 #top_title2 i {margin-right:10px;}
 #top_title2 i:hover {cursor:pointer;}
 
-#wrap {position:relative;width:100%;max-width:500px;margin:0 auto;background:#fff;text-align:left;overflow-y:scroll;}
+
+#top_title_white {position:relative;float:left;width:100%;height:60px;line-height:60px;font-weight:500;
+font-size:13pt;text-align:center;border-bottom:1px solid #ddd;background:#fff;letter-spacing:0.5pt;color:#000;margin-bottom:10px;}
+
+
+
+#wrap {position:relative;width:100%;max-width:500px;margin:0 auto;
+text-align:left;overflow-y:scroll;}
+
 .info {font-size:10pt;}
 
 
@@ -151,6 +166,18 @@ textarea.frm_default {height:100px;}
 .form_wrap.gray .frm_default {border: 1px solid #ddd;color: #888 !important;padding-left: 10px;}
 .form_wrap.gray label {position: relative;width: 100%; float: left;text-align: left;font-weight: 500;color: #444;margin: 10px 0 5px 0; }
 */
+
+
+.page_select {width:100%;height:800px;padding:20px;background:#f7f7f7;
+text-align:center;}
+
+.btn_select_type {position:relative;float:left;width:100% !important;
+height:100px;text-align:left;padding-left:100px;
+font-size:14pt;font-weight:500;border: 1px solid #e9eaed;background:#fff !important;
+line-height: 120%;margin-bottom:10px;}  
+.btn_select_type span {font-size:10pt;font-weight:normal;color:#999;}
+
+
 
 
 
@@ -204,8 +231,8 @@ border:0;border-radius:3px;padding-left:30px;margin:0 auto 10px auto;color:#fff;
       }
       
       .favorites {
-        padding: 12px;
-        margin-bottom: 10px;
+        text-align:center;
+        margin-bottom: 3px;
         display: inline-block;
         cursor: pointer;
       }
@@ -213,64 +240,41 @@ border:0;border-radius:3px;padding-left:30px;margin:0 auto 10px auto;color:#fff;
       
       
 /*검색창*/
-#sch {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  top: 0;
-  padding: 10px;
-  z-index: 999; }
-
-#sch input[type=text],
-#sch button {
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); }
+#sch {position: absolute;width: 100%;left: 0;top: 0px;padding: 10px;z-index: 999; }
 
 #sch input[type=text] {
-  width: calc(100% - 55px);
-  border: 1px solid #91d0cd;
+  width: 100%;
   background: #fff;
   height: 45px;
   line-height: 45px;
-  border-radius: 3px;
   padding-left: 50px;
   background: url("/img/icon_search.png") #fff no-repeat 15px center;
-  background-size: 20px auto; }
-
-#sch span {
-  float: right;
-  border: 1px solid #91d0cd;
-  background: #fff;
-  width: 45px;
-  height: 45px;
-  line-height: 45px;
-  border-radius: 3px;
-  background: url("/img/icon_mylocation.png") #fff no-repeat center center;
-  background-size: 20px auto; }
-
+  background-size: 20px auto;border:0;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.14);}
 
 /*[업주] 업체검색*/
 .sch_store input[type=text] {width:calc(100% - 100px) !important;}
 .sch_store button {background:#85d5d5;border:0;color:#fff;line-height:45px;
 float:right;width:90px;font-weight:500;border-radius:3px;}
 
-/*즐찾장소버튼*/
-#fav {position:absolute;top:65px;right:10px;width:45px}
+/*지도 위 버튼*/
+#map_btn {position:absolute;top:65px;right:12px;width:50px;}
+#map_btn span {position:relative;float:left;border:0;background: #fff;width: 50px;height: 50px;line-height: 50px;
+border-radius: 50%;margin-bottom:5px;box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.14); }
+#map_btn .mylocation {background: url("/img/icon_mylocation.png") #fff no-repeat center center;background-size: 20px auto;  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.14); }
+#map_btn .btn_fav2 {background: url("/img/icon_fav.png") #fff no-repeat center center;background-size: 20px auto;}
 
-.btn_fav2 {border:1px solid #91d0cd;width:45px;height:45px;line-height:45px;border-radius:3px;
-background:url('/img/icon_fav_star.png') #fff no-repeat center center;background-size:20px auto;margin-bottom:10px;
-box-shadow:0px 3px 5px rgba(0,0,0,0.3);}
+/*#map_btn .btn_fav2:before {font-family: FontAwesome; font-weight: 900; content: "\f005";}*/
+#map_btn .btn_plus {color:#525959;}
 
-.btn_plus {
-  border: 1px solid #91d0cd;
-  width: 45px;
-  height: 45px;
-  line-height: 45px;
-  border-radius: 3px;
-  background-size: 20px auto;
-  margin-bottom: 10px;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); }
+
+#fav-list {border-top:1px solid #ddd;position:relative;float:left;width:100%;text-align:left;padding:15px;}
+
 
 #container {position:relative;width:100%;padding:15px;}
+
+
 
 
 /*이 알바는 어때요*/
@@ -419,8 +423,6 @@ font-weight:500;padding:10px 20px 10px 30px;margin-top:10px;text-align:center;}
 
 #graybar {position:relative;width:100%;float:left;background:#f9f9f9;height:8px}
 
-
-
 .work_list .info2  b {color:#000 !important;}
 
 
@@ -428,7 +430,7 @@ font-weight:500;padding:10px 20px 10px 30px;margin-top:10px;text-align:center;}
 .st_info .st_top {position:relative;width:100%;padding:15px;}
 .st_info .st_top .img {position:relative;float:left;background:#ddd;width:60px;height:60px;border-radius:50%;overflow:hidden;}
 .st_info .st_top .img img {position:absolute;left:0;top:0;min-height:100%;width:auto !important;}
-.st_info .st_top .info {float:left;width:100%;max-width:300px;padding:5px 0 0 15px;}
+.st_info .st_top .info {float:left;width:calc(100% - 100px);max-width:300px;padding:5px 0 0 15px;}
 .st_info .st_top .title {font-size:13pt;font-weight:500;width:100%;margin-bottom:2px;}
 .st_info .st_top .title span {margin-left:8px;font-weight:400;font-size:10pt;color:#8a8a8a}
 

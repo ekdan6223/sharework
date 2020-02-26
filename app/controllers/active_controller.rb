@@ -16,7 +16,9 @@ class ActiveController < ApplicationController
   end
   
   def index1
-    @job = Job.where(status: 'open')
+    @today = Time.now.to_formatted_s(:db)
+
+    @job = Job.where('time_start > ?', @today)
     for i in 0..@job.length - 1
       @job[i].pay = insert_comma(@job[i].pay.to_i)
       @job[i].time_start = @job[i].time_start[10..15]

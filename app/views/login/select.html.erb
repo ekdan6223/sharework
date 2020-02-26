@@ -7,14 +7,14 @@ $(function(){
     
 </script>
 
-<style>
-.btn_select_type {position:relative;width:85%;height:100px;text-align:right;padding-right:30px;margin-bottom:20px;
-font-size:14pt;font-weight:500;border: 0;}  
-.btn_select_type span {font-size:12pt;font-weight:normal;color:#97d3d4;}
 
-</style>
+  
+    <div id="top_title_white">타입 선택</div>
+    
 
-<div id="wrap" class="index ">
+
+<div id="wrap" class="page_select">
+
 
 <form action= "/login/choose/<%= current_user.id %>" method="post">
   <input type="hidden" name="usertype" value="0">
