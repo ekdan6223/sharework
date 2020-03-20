@@ -16,6 +16,7 @@ class ActiveController < ApplicationController
   end
   
   def index1
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     @today = Time.now.to_formatted_s(:db)
 
     @job = Job.where('time_start > ?', @today)
